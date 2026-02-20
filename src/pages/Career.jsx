@@ -3,11 +3,11 @@ import CurrentOpenings from "../components/CurrentOpenings";
 import Form from "../components/Form";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Button from '../components/Button_x';
+import Button from "../components/Button_x";
 import Badge from "../components/Badge";
 
 const Career = () => {
-    const joinUsRef = useRef(null);
+  const joinUsRef = useRef(null);
 
   const scrollToForm = () => {
     joinUsRef.current?.scrollIntoView({
@@ -18,10 +18,12 @@ const Career = () => {
   return (
     <>
       {/* ================= HEADER / HERO SECTION ================= */}
-      <div className="w-full h-full bg-cover bg-center bg-no-repeat"
+      <div
+        className="w-full h-full bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: "url('/career.png')",
-        }}>
+        }}
+      >
         <Header />
 
         <section className="w-full flex justify-center bg-[#010509] mt-16 lg:mt-22">
@@ -46,17 +48,17 @@ const Career = () => {
               text-white gap-8 text-center
               -translate-y-6 sm:-translate-y-10 lg:-translate-y-14
               /* TOP GAP FIX */
-            pt-24 sm:pt-28
-            lg:pt-0
+               pt-24 sm:pt-28
+               lg:pt-0
 
-            /* BOTTOM SAFE AREA */
-            pb-32 sm:pb-28
-            lg:pb-0
+               /* BOTTOM SAFE AREA */
+               pb-32 sm:pb-28
+               lg:pb-0
 
-            lg:-translate-y-14
-            "
+               lg:-translate-y-14
+               "
             >
-              <Badge text="GROW WITH US" margin = ""/>
+              <Badge text="GROW WITH US" margin="" />
               <div className="max-w-[900px] flex flex-col items-center gap-5">
                 <h1 className="font-gotham font-medium text-[28px] sm:text-[32px] lg:text-[40px] leading-tight lg:leading-[52px]">
                   Careers at Wheedle: Where Growth
@@ -65,7 +67,9 @@ const Career = () => {
                 </h1>
 
                 <p className="font-inter font-medium text-sm sm:text-[15px] lg:text-base leading-relaxed">
-                  Join Wheedles’, a workplace where we foster your growth and learning process with real-life projects that create impact for our clients.
+                  Join Wheedles’, a workplace where we foster your growth and
+                  learning process with real-life projects that create impact
+                  for our clients.
                 </p>
               </div>
             </div>
@@ -85,15 +89,14 @@ const Career = () => {
                 </h2>
 
                 <p className="font-inter font-normal text-base leading-[26px] text-white">
-                  At Wheedle’s, we provide meaningful opportunities to grow, learn, and advance your career. Be a part of a workplace that’s just as committed to you as it is to the clients.
+                  At Wheedle’s, we provide meaningful opportunities to grow,
+                  learn, and advance your career. Be a part of a workplace
+                  that’s just as committed to you as it is to the clients.
                 </p>
 
-                <div
-                  className="w-full h-[58px]"
-                >
+                <div className="w-full h-[58px]">
                   <Button padding="28px">Join Us Now</Button>
                 </div>
-
               </div>
 
               {/* RIGHT FRAME */}
@@ -129,11 +132,12 @@ const Career = () => {
                 hover:scale-[1.03] hover:-translate-y-2
                     `}
                   >
-
-                    <div className="relative w-[52px] h-[52px] rounded-full 
+                    <div
+                      className="relative w-[52px] h-[52px] rounded-full 
                    bg-[linear-gradient(135deg,#2F3EFF,#1B2BC7)]
                    flex items-center justify-center
-                    shadow-[0_0_25px_rgba(79,107,255,0.6)]">
+                    shadow-[0_0_25px_rgba(79,107,255,0.6)]"
+                    >
                       <img
                         src={item.img}
                         alt="icon"
@@ -164,16 +168,26 @@ const Career = () => {
             </h2>
 
             <p className="font-inter font-medium text-base leading-[26px] text-center max-w-[900px]">
-              Our core values represent the principles that guide our decisions, shape our culture, and influence how we collaborate,
-              innovate, and deliver value to our clients.
+              Our core values represent the principles that guide our decisions,
+              shape our culture, and influence how we collaborate, innovate, and
+              deliver value to our clients.
             </p>
 
             {/* First Row */}
             <div className="w-full flex flex-col lg:flex-row justify-center gap-4">
               {[
-                { title: "Integrity & Transparency", desc: "We believe in transparency, be it with the client or our employees. We handle our projects with integrity and openness." },
-                { title: "Client-Centric Approach", desc: "We place our clients at the center of everything we do by understanding their business goals, challenges, and expectations." },
-                { title: "Ownership & Accountability", desc: "We believe in taking ownership of our work and responsibilities, ensuring commitments are met with integrity, transparency, and consistent delivery." }
+                {
+                  title: "Integrity & Transparency",
+                  desc: "We believe in transparency, be it with the client or our employees. We handle our projects with integrity and openness.",
+                },
+                {
+                  title: "Client-Centric Approach",
+                  desc: "We place our clients at the center of everything we do by understanding their business goals, challenges, and expectations.",
+                },
+                {
+                  title: "Ownership & Accountability",
+                  desc: "We believe in taking ownership of our work and responsibilities, ensuring commitments are met with integrity, transparency, and consistent delivery.",
+                },
               ].map((item) => (
                 <div
                   key={item.title}
@@ -196,8 +210,14 @@ const Career = () => {
             {/* Second Row */}
             <div className="w-full flex flex-col lg:flex-row justify-center gap-4">
               {[
-                { title: "Mutual Respect & Inclusion", desc: "No one in Wheedle believes in power misuse. Every idea and voice is respected and guided towards mutual favour and benefit." },
-                { title: "Ethical Credibility", desc: "Wheedle Technologies believes in ethical practices, and recognizing contributions fairly, giving everyone a chance to grow and learn." }
+                {
+                  title: "Mutual Respect & Inclusion",
+                  desc: "No one in Wheedle believes in power misuse. Every idea and voice is respected and guided towards mutual favour and benefit.",
+                },
+                {
+                  title: "Ethical Credibility",
+                  desc: "Wheedle Technologies believes in ethical practices, and recognizing contributions fairly, giving everyone a chance to grow and learn.",
+                },
               ].map((item) => (
                 <div
                   key={item.title}
@@ -219,63 +239,11 @@ const Career = () => {
           </div>
         </section>
 
-
-
-
-        {/* <section className="w-full flex justify-center bg-[radial-gradient(ellipse_at_center,_#0A1B5E_0%,_#010509_60%)]">
-        <div className="w-full max-w-[1440px] px-5 sm:px-8 lg:px-25 py-25 flex flex-col items-center gap-12 text-white">
-          <h2 className="font-gotham font-normal text-[36px] sm:text-[44px] lg:text-[53px] leading-[63px] text-center">
-            Our Values
-          </h2>
-
-          <p className="font-inter font-medium text-base leading-[26px] text-center max-w-[900px]">
-            We help businesses grow smarter and faster through technology-driven
-            solutions. By blending innovation with expertise, we transform ideas
-            into scalable, high-performance digital products.
-          </p>
-
-          <div className="w-full flex flex-col lg:flex-row justify-center gap-4">
-            {["Innovation", "Respect", "Accountability"].map((title) => (
-              <div
-                key={title}
-                className="w-full lg:w-[400px] h-[105px] rounded-[25px] border border-[#2F3EFF]/70 p-6 flex flex-col gap-2
-                bg-black/40 shadow-[0_0_25px_rgba(47,62,255,0.25)] transition-all duration-300 hover:bg-[linear-gradient(135deg,_#2F3EFF,_#1B2BC7)]
-                hover:shadow-[0_0_40px_rgba(47,62,255,0.6)]"
-              >
-                <h4 className="font-inter font-medium text-[18px] leading-[28px]">
-                  {title}
-                </h4>
-                <p className="font-inter text-[12px] leading-[22px]">
-                  We embrace change and continuous improvement
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <div className="w-full flex flex-col lg:flex-row justify-center gap-4">
-            {["Integrity", "Excellence"].map((title) => (
-              <div
-                key={title}
-                className="w-full lg:w-[610px] h-[105px] rounded-[25px] border border-[#2F3EFF]/70 p-6 flex flex-col gap-2
-                bg-black/40 shadow-[0_0_25px_rgba(47,62,255,0.25)] transition-all duration-300 hover:bg-[linear-gradient(135deg,_#2F3EFF,_#1B2BC7)]
-                hover:shadow-[0_0_40px_rgba(47,62,255,0.6)]"
-              >
-                <h4 className="font-inter font-medium text-[18px] leading-[28px]">
-                  {title}
-                </h4>
-                <p className="font-inter text-[12px] leading-[22px]">
-                  We embrace change and continuous improvement
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section> */}
+        
         {/* ================= CURRENT OPENINGS + Form ================= */}
         <CurrentOpenings onStartNowClick={scrollToForm} />
         <Form ref={joinUsRef} />
         <Footer />
-
       </div>
     </>
   );

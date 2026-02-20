@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import ContactPage from "../pages/ContactPage";
 import { motion, AnimatePresence } from "framer-motion";
 import servicesData from "../jsondata/ServicesData";
+import LogosData from "../jsondata/LogosData";
 
 const HEADER_HEIGHT_MOBILE = 82;
 const HEADER_HEIGHT_DESKTOP = 100;
@@ -132,7 +133,8 @@ function Header() {
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img
-              src="/FinalWebsiteLogo_.svg"
+              // src="/FinalWebsiteLogo_.svg"
+              src={LogosData.mainLogo}
               alt="Wheedle Technologies"
               className="h-12 lg:h-12 w-auto object-contain"
             />

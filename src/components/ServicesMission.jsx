@@ -10,8 +10,8 @@ function ServicesMission() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
         </svg>
       ),
-      title: "Web Development",
-      description: "We offer secure, highly functional web applications and websites designed to meet industry standards and increase your web traffic.",
+      title: "AI Web Engineering Agents",
+      description: "We offer secure, highly functional web engineering agents for applications and websites designed to meet industry standards and increase your web traffic.",
       path:"/service/web",
       highlight: true,
     },
@@ -21,8 +21,8 @@ function ServicesMission() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
         </svg>
       ),
-      title: "Mobile Development",
-      description: "Wheedle’s has created a name for itself in the development field with high-performing mobile applications designed to deliver seamless experiences across iOS and Android platforms.",
+      title: "Autonomous Mobile Application Agents",
+      description: "We deploy Autonomous Mobile Application Agents that design, develop, test, and optimize mobile apps across iOS and Android.",
       path:"/service/app",
     },
 
@@ -32,8 +32,8 @@ function ServicesMission() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
         </svg>
       ),
-      title: "Software Development",
-      description: "Get end-to-end software development services that focus on your productivity enhancement and operational goals.",
+      title: "AI Software Engineering Platforms",
+      description: "Get a customized AI Agent end-to-end software development services that focus on your productivity enhancement and operational goals.",
       path:"/service/software",
     },
     {
@@ -43,8 +43,8 @@ function ServicesMission() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
       ),
-      title: "IT Consulting",
-      description: "Get strategic IT Consulting with expert guidance on digital transformation and technology strategy. We create business strategies specifically for your business needs.",
+      title: " Intelligent IT Strategy & Advisory Agents",
+      description: "Get strategic IT Consulting on digital transformation and technology strategy by AI Advisory agents that create business strategies specifically for your business needs.",
       path:"/service/IT",
     },
     {
@@ -63,8 +63,8 @@ function ServicesMission() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
         </svg>
       ),
-      title: "Graphic Designing",
-      description: "Our designers have an eye for the aesthetics needed to capture your audience’s attention. We craft graphic designs that support branding, marketing, and consistent visual communication.",
+      title: "AI-Assisted Brand & Visual Design Systems",
+      description: "Our AI Visual Design Systems have an eye for the aesthetics needed to capture your audience’s attention, crafting graphic designs that support your branding.",
       path:"/service/graphicdesigning",
      },
     {
@@ -73,8 +73,8 @@ function ServicesMission() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
         </svg>
       ),
-      title: "UI/UX Designing",
-      description: "We create user-centered designs that deliver seamless and meaningful digital experiences aligned with your user and business needs.",
+      title: "Autonomous UI/UX Intelligence Platforms",
+      description: "We create AI UI/UX Agents that create user-centered designs to deliver seamless and meaningful digital experiences aligned with your business needs.",
       path:"/service/UI",
     },
     {
