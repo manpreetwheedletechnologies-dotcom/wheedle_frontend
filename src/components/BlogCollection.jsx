@@ -1,28 +1,30 @@
 import React from "react";
 import Button from "./Button_x";
+import LogosData from "../jsondata/LogosData";
 
 function BlogCollection() {
   const blogs = [
     {
-      image: "/blogcard4.png",
+      image: LogosData.blogcard4,
+
       title: "UI/UX Design Insights",
       description:
         "Explore user-centric design principles, usability trends, and real-world UI/UX strategies that create meaningful and engaging digital experiences across all devices.",
     },
     {
-      image: "/blogcard5.png",
+      image: LogosData.blogcard5,
       title: "Product Design & Experience",
       description:
         "Learn how thoughtful product design improves user engagement, enhances functionality, and drives business success through seamless experiences.",
     },
     {
-      image: "/blogcard6.png",
+      image: LogosData.blogcard6,
       title: "Digital Innovation",
       description:
         "Stay updated with emerging technologies, digital trends, and innovative solutions shaping the future of businesses worldwide.",
     },
     {
-      image: "/blogcard7.png",
+      image: LogosData.blogcard7,
       title: "Technology & Growth",
       description:
         "Read about scalable digital solutions, performance optimization, and modern tech strategies that help businesses grow smarter and faster.",

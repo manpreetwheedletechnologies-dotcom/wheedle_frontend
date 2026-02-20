@@ -45,7 +45,7 @@ const PrivacyPolicy = () => {
               <Badge text="Terms and Conditions" margin = ""/>
               <div className="max-w-[900px] flex flex-col items-center gap-5">
                 <h1 className="font-gotham font-medium text-[28px] sm:text-[32px] lg:text-[40px] leading-tight lg:leading-[52px]">
-              Terms & Conditions And Privacypolicy 
+              Terms & Conditions 
                 </h1>
 
                 <p className="font-inter font-medium text-sm sm:text-[15px] lg:text-base leading-relaxed">
@@ -139,13 +139,14 @@ const PrivacyPolicy = () => {
 
           {/* 6 */}
           <div>
-            <h1 className="text-center font-gotham font-medium text-[28px] sm:text-[35px] lg:text-[43px] leading-tight lg:leading-[52px]">
-              Privacy Policy
-            </h1>
+           <h2 className="text-xl sm:text-2xl font-semibold mb-3">
+              6. Privacy Policy
+
+            </h2>
             <br />
 
             <h3 className="font-medium text-lg mb-2">
-              1. Information We Collect
+             6.1 Information We Collect
             </h3>
             <ul className="list-disc list-inside text-gray-300 space-y-2 mb-4">
               <li>Name, email, phone number, company details</li>
@@ -154,7 +155,7 @@ const PrivacyPolicy = () => {
             </ul>
 
             <h3 className="font-medium text-lg mb-2">
-              2. How We Use Your Information
+             6.2  How We Use Your Information
             </h3>
             <ul className="list-disc list-inside text-gray-300 space-y-2 mb-4">
               <li>Provide and improve our services</li>
@@ -167,7 +168,7 @@ const PrivacyPolicy = () => {
             </p>
 
             <h3 className="font-medium text-lg mb-2">
-              3. Data Protection & Security
+              6.3 Data Protection & Security
             </h3>
             <p className="text-gray-300 mb-4">
               We implement reasonable technical and organizational measures to
@@ -175,7 +176,7 @@ const PrivacyPolicy = () => {
             </p>
 
             <h3 className="font-medium text-lg mb-2">
-              4. Cookies & Analytics
+              6.4 Cookies & Analytics
             </h3>
             <p className="text-gray-300 mb-4">
               Our website may use cookies and analytics tools to understand user
@@ -184,7 +185,7 @@ const PrivacyPolicy = () => {
             </p>
 
             <h3 className="font-medium text-lg mb-2">
-              5. Third-Party Services
+              6.5 Third-Party Services
             </h3>
             <p className="text-gray-300 mb-4">
               We may use trusted third-party tools such as analytics, hosting,
@@ -193,7 +194,7 @@ const PrivacyPolicy = () => {
             </p>
 
             <h3 className="font-medium text-lg mb-2">
-              6. Data Retention & Post-Service Handling
+              6.6 Data Retention & Post-Service Handling
             </h3>
             <p className="text-gray-300">
               Once services are discontinued, data is retained only as required

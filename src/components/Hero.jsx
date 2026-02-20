@@ -1,26 +1,15 @@
-import React, { useState} from "react"; // ✅ useState added
+import React, { useState } from "react"; // ✅ useState added
 import { Link } from "react-router-dom";
 import Button from "../components/Button_x";
 import { motion } from "framer-motion";
 import ContactPage from "../pages/ContactPage";
 import WhebotPage from "../pages/WhebotPage";
 import Badge from "./Badge";
+import LogosData from "../jsondata/LogosData";
 
 function Hero({ openBot }) {
   const [openContact, setOpenContact] = useState(false);
-  // const [openbot, setOpenbot] = useState(false);
-  // const [botMinimized, setBotMinimized] = useState(false);
 
-//   useEffect(() => {
-//   const timer = setTimeout(() => {
-//     setOpenbot(true);        // render bot
-//     setBotMinimized(true);  // show minimized icon
-//   }, 0);
-
-//   return () => clearTimeout(timer);
-// }, []);
-
-  
   return (
     <section
       className="
@@ -46,7 +35,7 @@ function Hero({ openBot }) {
         #1a237e 60%,
         #020617 100%
       )
-    `
+    `,
       }}
     >
       {/* Background Image */}
@@ -60,7 +49,7 @@ function Hero({ openBot }) {
 
       <div className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-7xl mx-auto flex flex-col items-center text-center">
         {/* Badge */}
-         <Badge text="Autonomous Marketing & Digital Solutions"  />
+        <Badge text="Autonomous Marketing & Digital Solutions" />
         {/* Heading */}
         <motion.h1
           animate={{ y: [0, -15, 0] }}
@@ -84,13 +73,15 @@ function Hero({ openBot }) {
                     md:mb-6 
                     lg:mb-7
                     px-2
-                  " >
+                  "
+        >
           Tailoring Customized Intelligent AI Agents
-          <br/> for Marketing,Growth & Automation
+          <br /> for Marketing,Growth & Automation
         </motion.h1>
 
         {/* Description */}
-        <p className="
+        <p
+          className="
           text-[12px] 
           sm:text-[10px] 
           md:text-[14px] 
@@ -109,14 +100,17 @@ function Hero({ openBot }) {
           lg:max-w-[750px]
           px-2
           font-normal
-        ">
-          From Intelligent Automation Engines to AI Marketing Ecosystems, Wheedle Technologies
+        "
+        >
+          From Intelligent Automation Engines to AI Marketing Ecosystems,
+          Wheedle Technologies
           <br className="hidden sm:block" />
           deliver a full spectrum of Digital Services.
         </p>
 
         {/* Buttons */}
-        <div className="
+        <div
+          className="
           flex flex-col 
           sm:flex-row 
           items-center 
@@ -130,7 +124,8 @@ function Hero({ openBot }) {
           lg:mb-16
           w-full 
           sm:w-auto
-        ">
+        "
+        >
           <Link
             className="
               inline-flex items-center justify-center gap-3
@@ -173,14 +168,9 @@ function Hero({ openBot }) {
           </Link>
 
           <div className="w-full sm:w-auto max-w-[400px] sm:max-w-none">
-            <Button
-  padding="28px"
- onClick={openBot}
-
->
-  Chat with Our AI Assistant
-</Button>
-
+            <Button padding="28px" onClick={openBot}>
+              Chat with Our AI Assistant
+            </Button>
           </div>
         </div>
         {/* ================= CONTACT MODAL ================= */}
@@ -194,34 +184,30 @@ function Hero({ openBot }) {
             messagePlaceholder="Tell us your message"
           />
         )}
-        {/* ================= chatbot MODAL ================= */}
-       {/* {openbot && (
-  <WhebotPage
-    isMinimized={botMinimized}
-    setIsMinimized={setBotMinimized}
-    onClose={() => setOpenbot(false)}
-  />
-)} */}
 
         {/* Hero Image */}
-        <div className="
+        <div
+          className="
           relative w-full 
-          max-w-[700px] 
-          lg:max-w-[800px] 
-          xl:max-w-[900px]
+          max-w-[9000px] 
+          lg:max-w-[1000px] 
+          xl:max-w-[1100px]
           px-0
           mt-[-1%]
           mb-[-6%]
-        ">
+        "
+        >
           <img
-            src="/Dashboard.png"
+            // src="/Dashboard.png"
+            src={LogosData.dashboard}
             alt="Digital Solutions"
             className="
-              w-full h-auto 
-              rounded-xl 
-              sm:rounded-2xl 
-              lg:rounded-3xl
-              border-2 border-blue-600
+                 w-full h-full   /* important */
+      object-cover    /* important */
+      rounded-xl 
+      sm:rounded-2xl 
+      lg:rounded-3xl
+      
             "
           />
         </div>

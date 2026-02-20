@@ -1,23 +1,24 @@
 import React from "react";
+import LogosData from "../jsondata/LogosData";
 
 function AboutWhyChoose() {
  const features = [
   {
-    icon: "/iconabout.png",
+    
     title: " Client Centric Approach",
     description:
       "Backed by a team of passionate professionals, we keep our customers at the core of our services, making development decisions with clear transparency and communication.",
       highlight: true,
   },
   {
-    icon: "/iconabout.png",
+    
     title: "Unmatched Commitment",
     description:
       "Wheedle Technologies has built a name for itself with the end-to-end support from brainstorming ideas for 24/7 after-deployment customer support and beyond.",
     highlight: true,
   },
   {
-    icon: "/iconabout.png",
+    
     title: "Reliable Tech Partners",
     description:
       "We can be your IT partner, delivering solutions that help you gain a prominent name in the digital race with software and services tailored for your business",
@@ -73,7 +74,7 @@ function AboutWhyChoose() {
                 {/* Icon */}
                <div className="w-12 h-12 mb-4 rounded-xl flex items-center justify-center">
                <img
-               src={feature.icon}
+               src={LogosData.iconabout}
                alt={feature.title}
                className="w-[52px] h-[52px] rounded-[40px] object-contain bg-[#171D7E] ring-1 ring-blue-400/30
                "

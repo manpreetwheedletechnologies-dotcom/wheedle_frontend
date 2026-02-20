@@ -28,7 +28,7 @@ function ServicesPage() {
           titleLine2Secondary: "Something Great Together",
           description: (
             <>
-              Speak with our experts to explore our  <br className="hidden md:block" /> IT services and find the right solution for your business needs.
+              Speak with our experts to explore our autonomous  <br className="hidden md:block" /> platforms and intelligent agents, and discover the right AI-driven solution for your business needs.
             </>),
           inputType: "tel",
           inputPlaceholder: "+91 254 568 XXXX",

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import ContactPage from "../pages/ContactPage";
 import servicesData from "../jsondata/ServicesData";
+import LogosData from "../jsondata/LogosData";
 
 function Footer() {
   const navLinks = [
@@ -29,11 +30,12 @@ function Footer() {
           {/* TOP ROW */}
           <div className="flex flex-col items-center text-center gap-5 sm:flex-row sm:items-start sm:justify-between sm:text-left">
             <img
-  src="/FinalWebsiteLogo_.svg"
-  alt="Wheedle Logo"
-  className="h-13 lg:h-15 w-[90px] lg:w-[340px] object-contain"
-/>
-
+              // src="/FinalWebsiteLogo_.svg"
+              
+              src={LogosData.mainLogo}
+              alt="Wheedle Logo"
+              className="h-13 lg:h-15 w-[90px] lg:w-[340px] object-contain"
+            />
 
             <button
               onClick={() => setOpenContact(true)}
@@ -120,7 +122,7 @@ function Footer() {
               <div>
                 <h4 className="text-sm font-semibold mb-4">Other Links</h4>
                 <ul className="space-y-2 flex flex-col items-center md:items-start">
-                  {["Privacy Policy and Terms & Conditions"].map((text, i) => (
+                  {["Terms & Conditions"].map((text, i) => (
                     <li key={i}>
                       <Link
                         to="/privacypolicy"

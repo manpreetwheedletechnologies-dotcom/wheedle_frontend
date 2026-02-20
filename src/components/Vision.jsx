@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import LogosData from "../jsondata/LogosData";
 
 function Vision() {
   const features = [
@@ -17,7 +18,8 @@ function Vision() {
           <div className="relative rounded-[30px] p-[1px]">
             <div className="overflow-hidden rounded-[29px]">
               <motion.img
-                src="/Rectangle 2.png"
+                // src="/Rectangle 2.png"
+                src= {LogosData.vision}
                 alt="Your Vision"
                 className="w-full h-[320px] sm:h-[420px] lg:h-[517px] object-cover"
                 animate={{

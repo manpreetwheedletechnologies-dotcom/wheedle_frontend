@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
+import LogosData from "../jsondata/LogosData";
 
 const WhebotPage = ({ isMinimized, setIsMinimized }) => {
   const [messages, setMessages] = useState([]);
@@ -69,7 +70,7 @@ const WhebotPage = ({ isMinimized, setIsMinimized }) => {
     try {
       const response = await axios({
         method: "post",
-        url: "https://wheedletechnologies.ai/chat",
+        url: "http://127.0.0.1:5000/chat",
         headers: {
           "x-api-key": "MY_SUPER_SECRET_KEY",
           "Content-Type": "application/json",
@@ -239,7 +240,8 @@ const WhebotPage = ({ isMinimized, setIsMinimized }) => {
               className="w-10 h-10 rounded-full bg-black border-2 border-[#0B2CC3] mr-2 animate-bounce"
             >
               <img
-                src="/whebot.svg"
+                // src="/whebot.svg"
+                src={LogosData.botLogo}
                 alt="WheBot"
                 className="w-full h-full object-contain scale-[2.2]"
               />
@@ -333,7 +335,8 @@ const WhebotPage = ({ isMinimized, setIsMinimized }) => {
               {/* LEFT */}
               <div className="flex items-center">
                 <img
-                  src="/whebot_lg.svg"
+                  // src="/whebot_lg.svg"
+                  src={LogosData.whebot}
                   alt="WheBot"
                   className="w-[200px] h-[200px]"
                 />
