@@ -1,44 +1,19 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "./Button_x";
-import LogosData from "../jsondata/LogosData";
+import blogs from "../jsondata/blogs";
 
 function BlogCollection() {
-  const blogs = [
-    {
-      image: LogosData.blogcard4,
-
-      title: "UI/UX Design Insights",
-      description:
-        "Explore user-centric design principles, usability trends, and real-world UI/UX strategies that create meaningful and engaging digital experiences across all devices.",
-    },
-    {
-      image: LogosData.blogcard5,
-      title: "Product Design & Experience",
-      description:
-        "Learn how thoughtful product design improves user engagement, enhances functionality, and drives business success through seamless experiences.",
-    },
-    {
-      image: LogosData.blogcard6,
-      title: "Digital Innovation",
-      description:
-        "Stay updated with emerging technologies, digital trends, and innovative solutions shaping the future of businesses worldwide.",
-    },
-    {
-      image: LogosData.blogcard7,
-      title: "Technology & Growth",
-      description:
-        "Read about scalable digital solutions, performance optimization, and modern tech strategies that help businesses grow smarter and faster.",
-    },
-  ];
+  const navigate = useNavigate();
 
   return (
     <section className="w-full py-20">
       <div className="w-full px-5">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
-            {/* Left Content */}
+
+            {/* Left Content (UNCHANGED) */}
             <div className="lg:w-2/5 lg:sticky lg:top-32 lg:self-start">
-              {/* Title */}
               <h2 className="text-4xl lg:text-5xl font-Gotham text-white leading-tight mb-6">
                 Explore Our
                 <br />
@@ -49,28 +24,22 @@ function BlogCollection() {
                 </span>
               </h2>
 
-              {/* Description */}
               <p className="text-sm text-white leading-relaxed">
                 Discover insightful articles covering the latest trends,
-                strategies, and innovations in technology. Our blogs are
-                designed to help businesses stay informed, make smarter
-                decisions, and grow through digital excellence.
+                strategies, and innovations in technology.
               </p>
             </div>
 
-            {/* Right Content - Blog Cards */}
-            
-            <div className="lg:w-3/5 flex flex-col gap-6  max-h-[470px] overflow-y-scroll pr-2
-             scrollbar-hide">
+            {/* Right Content - Dynamic Blog Cards */}
+            <div className="lg:w-3/5 flex flex-col gap-6 max-h-[470px] overflow-y-scroll pr-2 scrollbar-hide">
+
               {blogs.map((blog, index) => (
                 <div
-                  key={index}
+                  key={blog.slug}
                   className="w-full max-w-[595px] h-auto sm:h-[221px] rounded-[25px] bg-gradient-to-r from-[#0B2CC3] to-[#7B92FF] p-[1px]"
                 >
-                  <div
-                    className="w-full h-auto sm:h-full flex flex-col sm:flex-row gap-[10px] pt-[15px] pr-[25px] pb-[15px] pl-[15px] rounded-[24px]
-                    bg-[#040010] transition-all"
-                  >
+                  <div className="w-full h-auto sm:h-full flex flex-col sm:flex-row gap-[10px] pt-[15px] pr-[25px] pb-[15px] pl-[15px] rounded-[24px] bg-[#040010] transition-all">
+
                     {/* Image */}
                     <div className="w-full sm:w-[191px] h-[191px] flex-shrink-0 rounded-[15px] overflow-hidden">
                       <img
@@ -78,8 +47,8 @@ function BlogCollection() {
                         alt={blog.title}
                         className={`w-full h-full object-cover object-top transition-transform duration-300 hover:scale-110
                           ${index === 0 ? "object-right" : "object-top"}
-                         `}
-/>
+                        `}
+                      />
                     </div>
 
                     {/* Content */}
@@ -87,19 +56,27 @@ function BlogCollection() {
                       <h3 className="text-lg font-semibold text-white mb-2">
                         {blog.title}
                       </h3>
+
                       <p className="text-xs text-white leading-relaxed mb-3">
                         {blog.description}
                       </p>
+
                       <div>
-                        <Button className="px-4 py-2 text-xs font-Inter text-[#000000] bg-[#FFFFFF] border border-white/20 rounded-full transition-colors">
+                        <Button
+                          onClick={() => navigate(`/blog/${blog.slug}`)}
+                          className="px-4 py-2 text-xs font-Inter text-[#000000] bg-[#FFFFFF] border border-white/20 rounded-full transition-colors"
+                        >
                           View Blog
                         </Button>
                       </div>
+
                     </div>
                   </div>
                 </div>
               ))}
+
             </div>
+
           </div>
         </div>
       </div>

@@ -70,7 +70,7 @@ const WhebotPage = ({ isMinimized, setIsMinimized }) => {
     try {
       const response = await axios({
         method: "post",
-        url: "http://127.0.0.1:5000/chat",
+        url: "https://wheedletechnologies.ai/py/api/chat",
         headers: {
           "x-api-key": "MY_SUPER_SECRET_KEY",
           "Content-Type": "application/json",
