@@ -16,6 +16,7 @@ import Preloader from "./components/Preloader";
 import WhebotPage from "./pages/WhebotPage";
 import AnimatedCursor from "react-animated-cursor";
 import NotFound from "./pages/NotFound";
+import BlogDetails from "./components/Blog_preview";
 
 function App() {
   const location = useLocation();
@@ -32,26 +33,26 @@ function App() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-useEffect(() => {
-  const startTime = Date.now();
+  useEffect(() => {
+    const startTime = Date.now();
 
-  const handleLoad = () => {
-    const elapsed = Date.now() - startTime;
-    const remainingTime = Math.max(6600 - elapsed, 0);
+    const handleLoad = () => {
+      const elapsed = Date.now() - startTime;
+      const remainingTime = Math.max(6600 - elapsed, 0);
 
-    setTimeout(() => {
-      setLoading(false);
-    }, remainingTime);
-  };
+      setTimeout(() => {
+        setLoading(false);
+      }, remainingTime);
+    };
 
-  if (document.readyState === "complete") {
-    handleLoad();
-  } else {
-    window.addEventListener("load", handleLoad);
-  }
+    if (document.readyState === "complete") {
+      handleLoad();
+    } else {
+      window.addEventListener("load", handleLoad);
+    }
 
-  return () => window.removeEventListener("load", handleLoad);
-}, []);
+    return () => window.removeEventListener("load", handleLoad);
+  }, []);
 
   // Page transition animation
   const pageVariants = {
@@ -112,13 +113,14 @@ useEffect(() => {
                 path="/our-service/:serviceKey"
                 element={<ServicePages />}
               />
+              <Route path="/blog/:slug" element={<BlogDetails />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
               {/* 404 Fallback */}
               <Route
                 path="*"
                 element={
-                 <NotFound/>
+                  <NotFound />
                 }
               />
             </Routes>
