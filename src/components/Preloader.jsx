@@ -58,7 +58,7 @@ export default function Preloader() {
                         strokeLinejoin="round"
                         initial={{ scale: 0, rotate: -180, opacity: 0 }}
                         animate={{ scale: 1, rotate: 0, opacity: 1 }}
-                        transition={{ duration: 1, delay: 4.5, ease: "backOut" }}
+                        transition={{ duration: 1, delay: 5, ease: "backOut" }}
                     />
                 </g>
 
@@ -72,7 +72,7 @@ export default function Preloader() {
                         strokeLinejoin="round"
                         initial={{ scale: 0, rotate: -180, opacity: 0 }}
                         animate={{ scale: 1, rotate: 0, opacity: 1 }}
-                        transition={{ duration: 0.8, delay: 5, ease: "backOut" }}
+                        transition={{ duration: 0.8, delay: 4.5, ease: "backOut" }}
                     />
                 </g>
 

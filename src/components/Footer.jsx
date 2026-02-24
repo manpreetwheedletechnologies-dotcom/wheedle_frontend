@@ -7,9 +7,9 @@ import LogosData from "../jsondata/LogosData";
 function Footer() {
   const navLinks = [
     { label: "Home", path: "/" },
-    { label: "Our Services", path: "/services" },
+    { label: "Our Services", path: "/our-services" },
     { label: "Blog", path: "/blog" },
-    { label: "About", path: "/about" },
+    { label: "About", path: "/about-us" },
     { label: "Careers", path: "/career" },
   ];
 
@@ -17,7 +17,7 @@ function Footer() {
     const title = servicesData[key].hero.title_main;
     return {
       label: title,
-      path: `/service/${key}`,
+      path: `/our-service/${key}`,
     };
   });
 
@@ -34,7 +34,7 @@ function Footer() {
               
               src={LogosData.mainLogo}
               alt="Wheedle Logo"
-              className="h-13 lg:h-15 w-[90px] lg:w-[340px] object-contain"
+              className="h-13 lg:h-15 w-[150px] lg:w-[340px] object-contain"
             />
 
             <button
@@ -125,7 +125,7 @@ function Footer() {
                   {["Terms & Conditions"].map((text, i) => (
                     <li key={i}>
                       <Link
-                        to="/privacypolicy"
+                        to="/privacy-policy"
                         className="group relative inline-flex h-5 overflow-hidden text-sm font-medium"
                       >
                         <span className="translate-y-0 transition duration-300 group-hover:-translate-y-[150%]">
