@@ -2,7 +2,7 @@
 import React from "react";
 
 const servicesData = {
-  web: {
+  'ai-web-engineering-agents': {
     /* ================= HERO DATA ================= */
     hero: {
       badge: "Our services",
@@ -109,7 +109,7 @@ const servicesData = {
     },
   },
 
-  app: {
+  'ai-app-development-agent': {
     /* ================= HERO DATA ================= */
     hero: {
       badge: "Our services",
@@ -217,7 +217,7 @@ const servicesData = {
     
   },
 
-  software: {
+  "software-development-agentic-platform": {
     /* ================= HERO DATA ================= */
     hero: {
       badge: "Our services",
@@ -323,7 +323,7 @@ const servicesData = {
     
   },
 
-  IT: {
+  "autonomous-it-consulting-and-advisory-agent": {
     /* ================= HERO DATA ================= */
     hero: {
       badge: "Our services",
@@ -433,7 +433,7 @@ const servicesData = {
     
   },
 
-  digitalmarketing: {
+  "autonomous-digital-marketing-agents": {
     /* ================= HERO DATA ================= */
     hero: {
       badge: "Our services",
@@ -543,7 +543,7 @@ const servicesData = {
     
   },
 
-  graphicdesigning: {
+  "ai-graphic-design-automation-agent": {
     /* ================= HERO DATA ================= */
     hero: {
       badge: "Our services",
@@ -653,7 +653,7 @@ const servicesData = {
     
   },
 
-  UI: {
+  "autonomous-ui/ux-design-intelligence": {
     /* ================= HERO DATA ================= */
     hero: {
       badge: "Our services",
@@ -763,7 +763,7 @@ const servicesData = {
     
   },
 
-  AIsolutions: {
+  "ai-solutions-and-intelligent-automation": {
     /* ================= HERO DATA ================= */
     hero: {
       badge: "Our services",

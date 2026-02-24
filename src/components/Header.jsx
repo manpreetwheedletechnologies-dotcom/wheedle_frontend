@@ -19,15 +19,15 @@ function Header() {
 
   const services = Object.keys(servicesData).map((key) => ({
     label: servicesData[key].hero.title_main,
-    path: `/service/${key}`,
+    path: `/our-service/${key}`,
   }));
 
   const navLinks = [
     { name: "Home", path: "/" },
-    { name: "Our Services", path: "/services" },
+    { name: "Our Services", path: "/our-services" },
     // { name: "Pricing", path: "/pricing" },
     { name: "Blog", path: "/blog" },
-    { name: "About", path: "/about" },
+    { name: "About", path: "/about-us" },
     { name: "Careers", path: "/career" },
   ];
 
@@ -117,11 +117,10 @@ function Header() {
     <>
       {/* ================= HEADER ================= */}
       <header
-        className={`fixed top-0 left-0 w-full z-50 bg-black backdrop-blur-md transition-transform duration-300 ${
-          showHeader || mobileMenuOpen || searchOpen || openContact
+        className={`fixed top-0 left-0 w-full z-50 bg-black backdrop-blur-md transition-transform duration-300 ${showHeader || mobileMenuOpen || searchOpen || openContact
             ? "translate-y-0"
             : "-translate-y-full"
-        }`}
+          }`}
         style={{
           height:
             window.innerWidth < 1024
@@ -132,12 +131,15 @@ function Header() {
         <div className="h-full flex items-center justify-between px-4 lg:px-25 transition-all duration-300">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <img
-              // src="/FinalWebsiteLogo_.svg"
-              src={LogosData.mainLogo}
-              alt="Wheedle Technologies"
-              className="h-12 lg:h-12 w-auto object-contain"
-            />
+            <picture>
+              <source srcSet={LogosData.mainLogoAvif} type="image/avif" />
+              <source srcSet={LogosData.mainLogoWebp} type="image/webp" />
+              <img
+                src={LogosData.mainLogo}
+                alt="Wheedle Technologies"
+                className="h-12 lg:h-12 w-auto object-contain"
+              />
+            </picture>
           </Link>
 
           {/* Desktop Nav */}
@@ -230,7 +232,7 @@ function Header() {
                           {/* Top center button */}
                           <div className="flex justify-start mb-5">
                             <Link
-                              to="/services"
+                              to="/our-services"
                               onClick={() => setServicesOpen(false)}
                               className="relative group"
                             >
@@ -285,10 +287,9 @@ function Header() {
                   <NavLink
                     to={link.path}
                     className={({ isActive }) =>
-                      `group relative h-6 overflow-hidden text-[14px] transition-all duration-300 ${
-                        isActive
-                          ? "border-b-2 border-[#2934E4] rounded"
-                          : "text-white/90"
+                      `group relative h-6 overflow-hidden text-[14px] transition-all duration-300 ${isActive
+                        ? "border-b-2 border-[#2934E4] rounded"
+                        : "text-white/90"
                       }`
                     }
                   >
