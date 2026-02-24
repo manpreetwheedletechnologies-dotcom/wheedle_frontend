@@ -13,6 +13,15 @@ const BlogDetails = () => {
     return <div className="text-white p-20">Blog Not Found</div>;
   }
 
+  // Dynamic section titles
+  const titles = blog.sectionTitles || {
+    whatIs: "What is this?",
+    benefits: "Key Benefits",
+    future: "Future Outlook",
+    howItWorks: "How It Works",
+    final: "Conclusion"
+  };
+
   return (
     <div className="w-full min-h-screen bg-black text-white">
       <Header />
@@ -20,23 +29,17 @@ const BlogDetails = () => {
       {/* HERO */}
       <section className="w-full flex justify-center bg-[#010509] mt-16 lg:mt-22">
         <div className="relative w-full max-w-[1440px] min-h-[60vh] sm:min-h-[65vh] lg:min-h-[70vh] mt-[-5%]">
-
           <img
             src="/frame-image.png"
             alt="Frame"
             className="absolute inset-0 w-full h-full object-cover lg:object-contain"
           />
-
           <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-5 text-center gap-6">
             <Badge text={blog.category} margin="" />
-
             <h1 className="font-gotham font-medium text-[28px] sm:text-[32px] lg:text-[40px] max-w-[900px]">
               {blog.title}
             </h1>
-
-            <p className="text-gray-300 max-w-[700px]">
-              {blog.description}
-            </p>
+            <p className="text-gray-300 max-w-[700px]">{blog.description}</p>
           </div>
         </div>
       </section>
@@ -50,7 +53,6 @@ const BlogDetails = () => {
 
           {/* BLOG IMAGE + INTRO */}
           <div className="flex flex-col lg:flex-row items-center gap-10">
-
             <div className="w-full lg:w-1/2">
               <img
                 src={blog.blogImage}
@@ -58,21 +60,18 @@ const BlogDetails = () => {
                 className="rounded-2xl w-full object-cover border border-white/10"
               />
             </div>
-
             <div className="w-full lg:w-1/2 space-y-6">
               {blog.content.intro.map((para, i) => (
                 <p key={i}>{para}</p>
               ))}
             </div>
-
           </div>
 
           {/* WHAT IS */}
           <div>
             <h2 className="text-2xl font-semibold text-white mb-6">
-              What is Agentic AI?
+              {titles.whatIs}
             </h2>
-
             {blog.content.whatIs.map((para, i) => (
               <p key={i} className="mb-4">{para}</p>
             ))}
@@ -81,11 +80,17 @@ const BlogDetails = () => {
           {/* BENEFITS */}
           <div>
             <h2 className="text-2xl font-semibold text-white mb-6">
-              Key Benefits of Agentic AI
+              {titles.benefits}
             </h2>
 
+            {/* Render benefits description if available */}
+            {blog.content.benefits?.description && (
+              <p className="mb-4">{blog.content.benefits.description}</p>
+            )}
+
+            {/* Render benefits items */}
             <ul className="list-disc list-inside space-y-4">
-              {blog.content.benefits.map((item, i) => (
+              {blog.content.benefits?.items?.map((item, i) => (
                 <li key={i}>
                   <strong>{item.title}:</strong> {item.desc}
                 </li>
@@ -96,23 +101,16 @@ const BlogDetails = () => {
           {/* FUTURE */}
           <div>
             <h2 className="text-2xl font-semibold text-white mb-6">
-              The Future of Automation Starts with Agentic AI
+              {titles.future}
             </h2>
-
             <p>{blog.content.future}</p>
           </div>
 
           {/* HOW IT WORKS */}
           <div>
             <h2 className="text-2xl font-semibold text-white mb-6">
-              How does Agentic AI Works?
+              {titles.howItWorks}
             </h2>
-
-            <p>
-              Agentic AI follows a structured loop of perception, reasoning,
-              decision-making, execution, and learning.
-            </p>
-
             <ol className="list-decimal list-inside space-y-4 mt-4">
               {blog.content.howItWorks.map((step, i) => (
                 <li key={i}>
@@ -125,9 +123,8 @@ const BlogDetails = () => {
           {/* FINAL */}
           <div>
             <h2 className="text-2xl font-semibold text-white mb-6">
-              Unlock Business Potential with Agentic AI
+              {titles.final}
             </h2>
-
             {blog.content.final.map((para, i) => (
               <p key={i} className="mb-4">{para}</p>
             ))}
