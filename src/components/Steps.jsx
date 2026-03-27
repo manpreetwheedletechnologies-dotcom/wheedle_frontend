@@ -1,10 +1,17 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
+import API_BASE_URL from "../config/api";
 
 function Steps() {
   const [activeStep, setActiveStep] = useState(0);
   const [progress, setProgress] = useState(0);
 
-  const steps = [
+  const [steps, setSteps] = useState([]);
+  useEffect(() => {
+    fetchSteps();
+  }, []);
+
+  const staticSteps = [
     {
       number: 1,
       title: "Aligning Your Vision with Your Need",
@@ -28,17 +35,41 @@ function Steps() {
     },
   ];
 
+  const fetchSteps = async () => {
+    try {
+      const res = await axios.get(`${API_BASE_URL}/steps/`);
+      
+        const formatted = res.data.map((step, index) => ({
+        number: index + 1,
+        title: step.title,
+        description: step.description,
+        image: step.image ? `${API_BASE_URL}/uploads/${step.image}/` : `/placeholder-step-${index + 1}.jpeg`,
+      }));
+
+      if (formatted.length === 0) {
+        console.log('No valid API steps, using static fallback');
+        setSteps(staticSteps);
+      } else {
+        console.log('Using API formatted steps:', formatted);
+        setSteps(formatted);
+      }
+    } catch (error) {
+      console.error("Failed to fetch steps, using static fallback:", error);
+      setSteps(staticSteps);
+    }
+  };
+
   // 🔁 Auto step change (10 seconds)
   useEffect(() => {
+    if (steps.length <= 1) return;
+
     const interval = setInterval(() => {
-      setActiveStep((prev) =>
-        prev === steps.length - 1 ? 0 : prev + 1
-      );
+      setActiveStep((prev) => (prev === steps.length - 1 ? 0 : prev + 1));
     }, 10000);
 
     return () => clearInterval(interval);
-  }, []);
-
+  }, [steps]);
+ 
   // 🔵 Progress bar sync (10 seconds)
   useEffect(() => {
     setProgress(0);
@@ -67,13 +98,12 @@ function Steps() {
             {/* <span className="text-white/80 font-medium">
               3 Simple Steps
             </span>{" "} */}
-           Hook your Business with Adaptive AI Tailored for your Growth
+            Hook your Business with Adaptive AI Tailored for your Growth
           </p>
         </div>
 
         {/* Content */}
         <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
-
           {/* Left - Steps */}
           <div className="w-full lg:w-[320px]">
             {steps.map((step, index) => (
@@ -120,20 +150,15 @@ function Steps() {
           {/* Center - Image */}
           <div className="flex-1 flex justify-center">
             <div className="rounded-2xl overflow-hidden">
-              <img
-                src={steps[activeStep].image}
-                alt={steps[activeStep].title}
-                className="
-                object-cover 
-                w-[500px] h-[500px]
-                transition-transform duration-500 ease-in-out
-                hover:scale-110
-              "
-              />
+              {steps[activeStep] && (
+                <img
+                  src={steps[activeStep].image}
+                  alt={steps[activeStep].title}
+                  className="object-cover w-[500px] h-[500px] transition-transform duration-500 ease-in-out hover:scale-110"
+                />
+              )}
             </div>
           </div>
-
-
 
           {/* Right - Description */}
           <div className="w-full lg:w-[320px]">
@@ -152,11 +177,11 @@ function Steps() {
             </div>
 
             <h3 className="text-[30px] font-semibold text-blue-400 mb-3">
-              {steps[activeStep].title}
+              {steps[activeStep]?.title}
             </h3>
 
             <p className="text-[14px] leading-7 text-white/60">
-              {steps[activeStep].description}
+              {steps[activeStep]?.description}
             </p>
           </div>
         </div>

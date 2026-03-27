@@ -19,7 +19,8 @@ function Header() {
 
   const services = Object.keys(servicesData).map((key) => ({
     label: servicesData[key].hero.title_main,
-    path: `/our-service/${key}`,
+    path: `/our-service/${servicesData[key].slug}`,
+    // path: `/our-service/${key}`,
   }));
 
   const navLinks = [
@@ -455,7 +456,7 @@ function Header() {
                         >
                           {/* MAIN OUR SERVICES PAGE LINK */}
                           <NavLink
-                            to="/services"
+                            to="/our-services"
                             onClick={() => {
                               setServicesOpen(false);
                               setMobileMenuOpen(false);

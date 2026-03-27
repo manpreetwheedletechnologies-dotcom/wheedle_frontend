@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import emailjs from "@emailjs/browser";
+import axios from "axios";
+import API_BASE_URL from "../config/api";
 import { motion, AnimatePresence } from "framer-motion"; // ✅ Import Framer Motion
 // import validator from "email-validator";
-
 
 const ContactPage = ({
   onClose,
@@ -27,7 +28,6 @@ const ContactPage = ({
   });
   const [toastKey, setToastKey] = useState(0);
 
-
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -39,70 +39,60 @@ const ContactPage = ({
     setFormData({ ...formData, phone: value });
   };
 
+  const checkEmailExistence = (email) => {
+    // Don't validate while user is typing
+    if (!email || !email.includes("@")) return true;
 
+    // Only validate when email looks complete
+    const emailCompleteRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+    if (!emailCompleteRegex.test(email)) {
+      showErrorToast("Please enter a valid email address.");
+      return false;
+    }
 
+    // Block fake domains
+    const blockedDomains = [
+      "mailinator.com",
+      "tempmail.com",
+      "10minutemail.com",
+      "guerrillamail.com",
+    ];
 
-const checkEmailExistence = (email) => {
-  // Don't validate while user is typing
-  if (!email || !email.includes("@")) return true;
+    const domain = email.split("@")[1];
+    if (blockedDomains.includes(domain)) {
+      showErrorToast("Temporary email addresses are not allowed.");
+      return false;
+    }
 
-  // Only validate when email looks complete
-  const emailCompleteRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return true;
+  };
 
-  if (!emailCompleteRegex.test(email)) {
-    showErrorToast("Please enter a valid email address.");
-    return false;
-  }
+  const showErrorToast = (message) => {
+    setToastKey(Date.now());
+    setAlert({
+      show: true,
+      type: "error",
+      message,
+    });
 
-  // Block fake domains
-  const blockedDomains = [
-    "mailinator.com",
-    "tempmail.com",
-    "10minutemail.com",
-    "guerrillamail.com",
-  ];
+    setTimeout(() => {
+      setAlert({ show: false });
+    }, 5000);
+  };
 
-  const domain = email.split("@")[1];
-  if (blockedDomains.includes(domain)) {
-    showErrorToast("Temporary email addresses are not allowed.");
-    return false;
-  }
+  const showSuccessToast = (message) => {
+    setToastKey(Date.now());
+    setAlert({
+      show: true,
+      type: "success",
+      message,
+    });
 
-  return true;
-};
-
-
-const showErrorToast = (message) => {
-  setToastKey(Date.now());
-  setAlert({
-    show: true,
-    type: "error",
-    message,
-  });
-
-  setTimeout(() => {
-    setAlert({ show: false });
-  }, 5000);
-};
-
-const showSuccessToast = (message) => {
-  setToastKey(Date.now());
-  setAlert({
-    show: true,
-    type: "success",
-    message,
-  });
-
-  setTimeout(() => {
-    setAlert({ show: false });
-  }, 5000);
-};
-
-
-
-
-
+    setTimeout(() => {
+      setAlert({ show: false });
+    }, 5000);
+  };
 
 
   const handleSubmit = async (e) => {
@@ -118,8 +108,8 @@ const showSuccessToast = (message) => {
       return;
     }
 
-     // ✅ EMAIL EXISTENCE CHECK
-  if (!checkEmailExistence(formData.email)) return;
+    // ✅ EMAIL EXISTENCE CHECK
+    if (!checkEmailExistence(formData.email)) return;
 
     const phoneRegex = /^\d{10}$/;
     if (formData.phone && !phoneRegex.test(formData.phone)) {
@@ -134,11 +124,21 @@ const showSuccessToast = (message) => {
     try {
       setLoading(true);
 
-      await emailjs.send(
-        "service_0rfgenl",
-        "template_1t0tf7e",
-        {
-          message: `
+      // 🔥 1️⃣ SAVE TO DATABASE FIRST
+      await axios.post(`${API_BASE_URL}/formleads/`, {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+      });
+
+      // 🔥 2️⃣ THEN SEND EMAIL (even if this fails, DB is already saved)
+      try {
+        await emailjs.send(
+          "service_0rfgenl",
+          "template_1t0tf7e",
+          {
+            message: `
           Title: ${title}
           Name: ${formData.name}
           Email: ${formData.email}
@@ -146,12 +146,14 @@ const showSuccessToast = (message) => {
           Message:
           ${formData.message}
           `,
-        },
-        "uAT0iHgXv_Fm3WosM"
-      );
+          },
+          "uAT0iHgXv_Fm3WosM"
+        );
+      } catch (emailError) {
+        console.log("Email failed but data saved:", emailError);
+      }
 
-    showSuccessToast("Message sent successfully!");
-
+      showSuccessToast("Message sent successfully!");
 
       setFormData({
         name: "",
@@ -160,26 +162,23 @@ const showSuccessToast = (message) => {
         message: "",
       });
     } catch {
-     showErrorToast("Failed to send message. Please try again.");
-
+      showErrorToast("Failed to send message. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-
     <section className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center px-4 sm:px-6">
       <AnimatePresence>
         <motion.div
           key="contactModal"
           initial={{ opacity: 0, scale: 0.8, y: -20 }} // start slightly above and small
-          animate={{ opacity: 1, scale: 1, y: 0 }}    // animate to full size
-          exit={{ opacity: 0, scale: 0.8, y: -20 }}   // exit animation
+          animate={{ opacity: 1, scale: 1, y: 0 }} // animate to full size
+          exit={{ opacity: 0, scale: 0.8, y: -20 }} // exit animation
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
           className="relative w-full max-w-4xl bg-[#040010] border border-white/20 rounded-2xl p-6 sm:p-8 lg:p-12 flex flex-col lg:flex-row gap-8 max-h-[90vh] overflow-y-auto"
         >
-
           {/* ❌ Close */}
           <button
             onClick={onClose}
@@ -233,16 +232,15 @@ const showSuccessToast = (message) => {
               ))}
 
               <input
-  type="email"
-  name="email"
-  value={formData.email}
-  onChange={handleChange}
-  onBlur={(e) => checkEmailExistence(e.target.value)}
-  placeholder="Your email"
-  required
-  className="w-full h-10 px-3 rounded-md bg-white/10 text-white outline-none text-sm"
-/>
-
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                onBlur={(e) => checkEmailExistence(e.target.value)}
+                placeholder="Your email"
+                required
+                className="w-full h-10 px-3 rounded-md bg-white/10 text-white outline-none text-sm"
+              />
 
               <input
                 type="tel"
@@ -285,71 +283,41 @@ const showSuccessToast = (message) => {
 
           {/* 🚨 ALERT WITH MOTION */}
           {/* 🚨 TOAST ALERT */}
-<AnimatePresence>
-  {alert.show && (
-    <motion.div
-      key={toastKey}
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 40 }}
-      transition={{ duration: 0.3 }}
-      className="fixed bottom-6 right-6 z-50 w-[90vw] sm:w-[360px]"
-    >
-      <div
-        className={`relative overflow-hidden rounded-xl border p-4 text-white shadow-lg
-        ${alert.type === "success"
-            ? "bg-gradient-to-r from-[#0B2CC3] to-[#4D6DFF] border-[#6D87FF]"
-            : "bg-gradient-to-r from-[#7A0000] to-[#b30089] border-[#f44308]"
-          }`}
-      >
-        {/* MESSAGE */}
-        <p className="text-sm font-medium leading-snug">
-          {alert.message}
-        </p>
-
-        {/* TIMER LINE (5s) */}
-        <motion.div
-          initial={{ width: "100%" }}
-          animate={{ width: "0%" }}
-          transition={{ duration: 5, ease: "linear" }}
-          className="absolute bottom-0 left-0 h-[3px] bg-white/70"
-        />
-      </div>
-    </motion.div>
-  )}
-</AnimatePresence>
-
-          {/* <AnimatePresence>
+          <AnimatePresence>
             {alert.show && (
               <motion.div
-                key="alert"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4"
+                key={toastKey}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 40 }}
+                transition={{ duration: 0.3 }}
+                className="fixed bottom-6 right-6 z-50 w-[90vw] sm:w-[360px]"
               >
                 <div
-                  className={`p-6 rounded-lg max-w-sm w-full text-center border ${alert.type === "success"
-                    ? "bg-[#0B2CC3]/90 border-[#1A45E5]"
-                    : "bg-[#8B0000]/90 border-[#FF4C4C]"
-                    } text-white`}
+                  className={`relative overflow-hidden rounded-xl border p-4 text-white shadow-lg
+        ${alert.type === "success"
+                      ? "bg-gradient-to-r from-[#0B2CC3] to-[#4D6DFF] border-[#6D87FF]"
+                      : "bg-gradient-to-r from-[#7A0000] to-[#b30089] border-[#f44308]"
+                    }`}
                 >
-                  <p className="text-sm font-medium">{alert.message}</p>
-                  <button
-                    onClick={() => setAlert({ show: false })}
-                    className="mt-4 px-4 py-2 bg-white/10 hover:bg-white/20 rounded"
-                  >
-                    Close
-                  </button>
+                  {/* MESSAGE */}
+                  <p className="text-sm font-medium leading-snug">
+                    {alert.message}
+                  </p>
+
+                  {/* TIMER LINE (5s) */}
+                  <motion.div
+                    initial={{ width: "100%" }}
+                    animate={{ width: "0%" }}
+                    transition={{ duration: 5, ease: "linear" }}
+                    className="absolute bottom-0 left-0 h-[3px] bg-white/70"
+                  />
                 </div>
               </motion.div>
             )}
-          </AnimatePresence> */}
-
+          </AnimatePresence>
         </motion.div>
       </AnimatePresence>
-
     </section>
   );
 };

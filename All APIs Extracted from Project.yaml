@@ -1,0 +1,52 @@
+All APIs Extracted from Project (for Postman Testing)
+
+Base URL: https://www.savorka.in/wheedle/py/api (from src/config/api.js)
+
+List of All Endpoints (GET/POST/PUT/DELETE):
+
+
+1. /steps/                    GET: List steps          (POST: Add step)
+   /steps/:id                  DELETE: Delete step
+
+2. /hero/                     GET: Hero data           PUT: Update hero
+
+3. /partners/                 GET: List partners       POST: Add partner  
+   /partners/:id               DELETE: Delete partner
+
+4. /leads/                    GET: List leads          POST: Add lead (Newsletter)
+   /leads/:id                  PUT: Update status       DELETE: Delete lead
+   /leads/count/all            GET: Leads count
+
+5. /jobs/                     GET: List jobs           POST: Add job
+   /jobs/:id                   DELETE: Delete job
+   /jobs/count/all             GET: Jobs count
+
+6. /blogs/                    GET: List blogs          POST: Add blog
+   /blogs/:id                  DELETE: Delete blog
+   /blogs/:slug                GET: Single blog
+   /blogs/count/all            GET: Blogs count
+
+7. /testimonials              GET: Testimonials list
+
+8. /contacts/                 [Likely exists, not explicit]
+
+Admin Dashboard Stats:
+- /jobs/count/all
+- /blogs/count/all  
+- /leads/count/all
+Postman Test Examples:
+
+GET Steps (empty now):
+
+
+GET https://www.savorka.in/wheedle/py/api/steps/
+POST Step (needs image multipart):
+
+
+POST https://www.savorka.in/wheedle/py/api/steps/
+Content-Type: multipart/form-data
+
+title: Test Step
+description: Test desc
+image: (file upload)
+Auth: Admin login likely needed
