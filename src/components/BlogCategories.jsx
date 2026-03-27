@@ -40,9 +40,9 @@ function BlogCategories() {
             </div>
 
             {/* Right - Button */}
-            <div className="w-full sm:w-auto max-w-[400px] sm:max-w-none">
+            {/* <div className="w-full sm:w-auto max-w-[400px] sm:max-w-none">
               <Button padding="28px"> View All Categories</Button>
-            </div>
+            </div> */}
           </div>
 
           {/* Category Cards */}

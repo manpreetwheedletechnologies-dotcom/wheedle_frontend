@@ -11,9 +11,9 @@ function Vision() {
 
   return (
     <section className="w-full py-16 lg:py-32 relative overflow-hidden">
-      <div className="w-full px-4 lg:px-32 flex flex-col lg:flex-row items-center gap-8 lg:gap-14 relative z-10">
+      <div className="w-full max-w-[1400px] mx-auto px-4 lg:px-32 flex flex-col xl:flex-row items-center gap-8 lg:gap-14 relative z-10">
 
-        {/* LEFT IMAGE */}<div className="w-full lg:w-[545px] shrink-0 group lg:-ml-12">
+        {/* LEFT IMAGE */}<div className="w-full xl:w-[545px] shrink-0 group xl:-ml-12">
 
           <div className="relative rounded-[30px] p-[1px]">
             <div className="overflow-hidden rounded-[29px]">
@@ -37,7 +37,7 @@ function Vision() {
         </div>
 
         {/* RIGHT CONTENT */}
-        <div className="flex-1 w-full max-w-[645px] lg:h-[503px] flex flex-col gap-6 sm:gap-8 lg:gap-[50px]">
+        <div className="flex-1 w-full max-w-[645px]  flex flex-col gap-6 sm:gap-8 lg:gap-[50px]">
           <div>
             <h2 className="text-4xl lg:text-5xl font-Gotham text-white">
               Your Vision.
@@ -80,11 +80,6 @@ function Vision() {
               </li>
             ))}
           </ul>
-
-          {/* BUTTON */}
-          {/* <div>
-            <Button padding="20px 30px">Start Your Journey</Button>
-          </div> */}
         </div>
       </div>
     </section>

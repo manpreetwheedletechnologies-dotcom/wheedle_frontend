@@ -11,6 +11,8 @@ import blogcard5 from "../jsondata/logos/blogcard5.svg";
 import blogcard6 from "../jsondata/logos/blogcard6.svg";
 import blogcard7 from "../jsondata/logos/blogcard7.svg";
 import careerimage from "../jsondata/logos/careerimage.svg";
+import adminlogo from "../jsondata/logos/adminlogo.svg";
+
 
 const LogosData = {
   mainLogo: mainLogo,
@@ -26,6 +28,7 @@ const LogosData = {
   blogcard6: blogcard6,
   blogcard7: blogcard7,
   careerimage: careerimage,
+  adminlogo: adminlogo
 };
 
 export default LogosData;

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import LogosData from "../jsondata/LogosData";
+import API_BASE_URL from "../config/api";
 
 const WhebotPage = ({ isMinimized, setIsMinimized }) => {
   const [messages, setMessages] = useState([]);
@@ -70,7 +71,7 @@ const WhebotPage = ({ isMinimized, setIsMinimized }) => {
     try {
       const response = await axios({
         method: "post",
-        url: "https://wheedletechnologies.ai/py/api/chat",
+        url: `${API_BASE_URL}/chat`,
         headers: {
           "x-api-key": "MY_SUPER_SECRET_KEY",
           "Content-Type": "application/json",
@@ -87,7 +88,7 @@ const WhebotPage = ({ isMinimized, setIsMinimized }) => {
 
       // Add bot response with typewriter effect
       const botResponse = response.data.reply;
-      
+
       // Add empty bot message that will be filled character by character
       setMessages((prev) => [
         ...prev,
@@ -124,21 +125,21 @@ const WhebotPage = ({ isMinimized, setIsMinimized }) => {
 
     const intervalId = setInterval(() => {
       currentIndex++;
-      
+
       setMessages((prev) => {
         const updated = [...prev];
         const lastMessage = updated[updated.length - 1];
-        
+
         if (lastMessage && lastMessage.type === "bot" && !lastMessage.isComplete) {
           lastMessage.displayText = fullText.slice(0, currentIndex);
-          
+
           // Mark as complete when all text is typed
           if (currentIndex >= fullText.length) {
             lastMessage.isComplete = true;
             clearInterval(intervalId);
           }
         }
-        
+
         return updated;
       });
     }, typingSpeed);
@@ -404,20 +405,18 @@ const WhebotPage = ({ isMinimized, setIsMinimized }) => {
                       initial="hidden"
                       animate="visible"
                       exit="exit"
-                      className={`flex flex-col ${
-                        msg.type === "user" ? "items-end" : "items-start"
-                      }`}
+                      className={`flex flex-col ${msg.type === "user" ? "items-end" : "items-start"
+                        }`}
                     >
                       <span className="text-[11px] text-white opacity-80 mb-1">
                         {msg.type === "user" ? "You" : "WheBot"}
                       </span>
 
                       <div
-                        className={`max-w-[85%] text-sm px-4 py-2 rounded-xl ${
-                          msg.type === "user"
-                            ? "bg-[#0B2CC3]"
-                            : "bg-[#040010] border border-[#0B2CC3]"
-                        }`}
+                        className={`max-w-[85%] text-sm px-4 py-2 rounded-xl ${msg.type === "user"
+                          ? "bg-[#0B2CC3]"
+                          : "bg-[#040010] border border-[#0B2CC3]"
+                          }`}
                       >
                         {msg.type === "bot" && !msg.isComplete ? (
                           <>

@@ -1,14 +1,43 @@
-import React, { useState } from "react"; // ✅ useState added
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import Button from "../components/Button_x";
 import { motion } from "framer-motion";
 import ContactPage from "../pages/ContactPage";
-import WhebotPage from "../pages/WhebotPage";
+import API_BASE_URL from "../config/api";
+
 import Badge from "./Badge";
 import LogosData from "../jsondata/LogosData";
 
 function Hero({ openBot }) {
   const [openContact, setOpenContact] = useState(false);
+  const [heroData, setHeroData] = useState({
+    badge: "",
+    heading: "",
+    description: "",
+  });
+
+  const staticContent = {
+    badge: "Autonomous Marketing & Digital Solutions",
+    heading: "Tailoring Customized Intelligent AI Agents\nfor Marketing, Growth & Automation",
+    description:
+      "From Intelligent Automation Engines to AI Marketing Ecosystems, Wheedle Technologies deliver a full spectrum of Digital Services.",
+  };
+
+  useEffect(() => {
+    axios
+      .get(`${API_BASE_URL}/hero/`)
+      .then((res) => {
+        if (res.data) {
+          setHeroData(res.data);
+        } else {
+          setHeroData(staticContent);
+        }
+      })
+      .catch(() => {
+        setHeroData(staticContent);
+      });
+  }, []);
 
   return (
     <section
@@ -49,7 +78,8 @@ function Hero({ openBot }) {
 
       <div className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-7xl mx-auto flex flex-col items-center text-center">
         {/* Badge */}
-        <Badge text="Autonomous Marketing & Digital Solutions" />
+        <Badge text={heroData.badge} />
+
         {/* Heading */}
         <motion.h1
           animate={{ y: [0, -15, 0] }}
@@ -75,8 +105,12 @@ function Hero({ openBot }) {
                     px-2
                   "
         >
-          Tailoring Customized Intelligent AI Agents
-          <br /> for Marketing,Growth & Automation
+          {heroData.heading.split("\n").map((line, i, arr) => (
+            <span key={i}>
+              {line}
+              {i < arr.length - 1 && <br />}
+            </span>
+          ))}
         </motion.h1>
 
         {/* Description */}
@@ -102,10 +136,7 @@ function Hero({ openBot }) {
           font-normal
         "
         >
-          From Intelligent Automation Engines to AI Marketing Ecosystems,
-          Wheedle Technologies
-          <br className="hidden sm:block" />
-          deliver a full spectrum of Digital Services.
+          {heroData.description}
         </p>
 
         {/* Buttons */}
@@ -173,6 +204,7 @@ function Hero({ openBot }) {
             </Button>
           </div>
         </div>
+
         {/* ================= CONTACT MODAL ================= */}
         {openContact && (
           <ContactPage
@@ -198,16 +230,14 @@ function Hero({ openBot }) {
         "
         >
           <img
-            // src="/Dashboard.png"
             src={LogosData.dashboard}
             alt="Digital Solutions"
             className="
-                 w-full h-full   /* important */
-      object-cover    /* important */
-      rounded-xl 
-      sm:rounded-2xl 
-      lg:rounded-3xl
-      
+              w-full h-full
+              object-cover
+              rounded-xl 
+              sm:rounded-2xl 
+              lg:rounded-3xl
             "
           />
         </div>

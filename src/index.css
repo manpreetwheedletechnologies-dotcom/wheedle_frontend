@@ -58,6 +58,7 @@
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
+  
 }
 
 /* Base styles */
@@ -211,15 +212,7 @@ body {
 }
 
 
- /* remove scroll bar from about page */
-
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-.scrollbar-hide {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
+ 
 
 @keyframes whebotPopup {
   0% {
@@ -233,4 +226,125 @@ body {
 }
 
 
+@keyframes shine {
+  0% {
+    background-position: -200px;
+  }
+  100% {
+    background-position: 200px;
+  }
+}
 
+
+/* OPEN ANIMATION */
+
+@keyframes popup {
+
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+}
+
+.animate-popup {
+
+  animation: popup 0.25s ease;
+
+}
+
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+   animation: scroll 30s linear infinite;
+}
+
+
+
+.inputbox{
+
+@apply
+
+w-full
+
+mt-2
+
+border
+
+border-gray-300
+
+p-3
+
+rounded-lg
+
+bg-white
+
+focus:ring-2
+
+focus:ring-[#4F46E5]
+
+outline-none;
+
+}
+
+
+
+/* For card popup */
+@keyframes fadeIn{
+from{opacity:0}
+to{opacity:1}
+}
+
+@keyframes scaleIn{
+from{
+opacity:0;
+transform:scale(.9) translateY(20px);
+}
+to{
+opacity:1;
+transform:scale(1) translateY(0);
+}
+}
+
+.animate-fadeIn{
+animation:fadeIn .25s ease forwards;
+}
+
+.animate-scaleIn{
+animation:scaleIn .3s ease forwards;
+}
+
+
+
+/* Desktop thin scrollbar about page */
+@media (min-width: 1024px) {
+  .desktop-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .desktop-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .desktop-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.4);
+    border-radius: 10px;
+  }
+
+  .desktop-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.6);
+  }
+}

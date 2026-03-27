@@ -4,12 +4,13 @@ import LogosData from "../jsondata/LogosData";
 const blogs = [
     {
         slug: "what-is-agentic-ai",
+        image: LogosData.vision,
         category: "AI & Automation",
         title: "What is Agentic AI and How does it Work?",
         description:
             "A complete guide to understanding Agentic AI, its benefits, applications, and how it enables intelligent automation.",
-        image: "/AgenticAI 1.png",
-        blogImage: "/AgenticAI 1.png",
+        
+        blogImage: LogosData.vision,
         sectionTitles: {
             whatIs: "What is Agentic AI?",
             benefits: "Key Benefits of Agentic AI",

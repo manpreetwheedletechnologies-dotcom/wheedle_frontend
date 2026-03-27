@@ -78,7 +78,7 @@ function Features() {
     <div
       className="
         group relative overflow-hidden
-        w-full sm:w-[280px] lg:w-[325px] min-h-[190px]
+        w-full max-w-[325px] min-h-[190px]
         p-[25px]
         rounded-[25px]
         border border-blue-600/60
@@ -123,10 +123,10 @@ function Features() {
   return (
     <section className="w-full py-12 lg:py-24">
       <div className="w-full px-4 sm:px-6 lg:px-24 xl:px-28">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-10">
+        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center gap-10 lg:gap-16">
 
           {/* Left */}
-          <div className="hidden lg:flex flex-col gap-[25px] w-full max-w-[325px]">
+          <div className="hidden lg:flex flex-col gap-[25px] w-full max-w-[325px] items-center lg:items-start">
 
             {leftFeatures.map((feature, i) => (
               <FeatureCard key={i} {...feature} />
@@ -155,12 +155,12 @@ function Features() {
               <br />
               Business Needs for
               <br />
-              <span className="text-white/50 sm:whitespace-nowrap">An AI-Driven</span>
+              <span className="text-white sm:whitespace-nowrap">An AI-Driven</span>
               <br/>
               World
             </h2>
-            <br /><br />
-            <Link to="/services">
+            <div className="h-6 lg:h-10" />
+            <Link to="/our-services">
               <Button padding="25px 20px">
                 Explore Our Services
               </Button>
@@ -169,14 +169,14 @@ function Features() {
 
 
           {/* Right */}
-          <div className="hidden lg:flex flex-col gap-[25px] w-[325px] h-[620px]">
+          <div className="hidden lg:flex flex-col gap-[25px] w-full max-w-[325px]">
             {rightFeatures.map((feature, i) => (
               <FeatureCard key={i} {...feature} />
             ))}
           </div>
 
           {/* Mobile */}
-          <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4 w-full mt-6">
+          <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 w-full mt-10 justify-items-center">
             {[...leftFeatures, ...rightFeatures].map((feature, i) => (
               <FeatureCard key={i} {...feature} />
             ))}
