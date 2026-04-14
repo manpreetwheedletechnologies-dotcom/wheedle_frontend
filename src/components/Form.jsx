@@ -7,7 +7,7 @@ const Form = forwardRef((props, ref) => {
     email: "",
     phone: "",
     lookingFor: "",
-    resume: null, // ✅ added
+    resume: null, 
   });
 
   const [loading, setLoading] = useState(false);
@@ -74,7 +74,7 @@ const Form = forwardRef((props, ref) => {
 
       const res = await fetch(`${API_BASE_URL}/contact/`, {
         method: "POST",
-        body: bodyData, // ✅ multipart/form-data
+        body: bodyData, 
       });
 
       const data = await res.json();

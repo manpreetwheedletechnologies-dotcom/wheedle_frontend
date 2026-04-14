@@ -23,7 +23,6 @@ function BlogCollection() {
 
       if (comprehensiveBlogs.length === 0) {
         comprehensiveBlogs = staticBlogs;
-        console.log("Using fallback static blogs (all)");
       }
 
       setBlogs(comprehensiveBlogs);
@@ -32,7 +31,6 @@ function BlogCollection() {
       // Fallback to static on error
       const fallbackBlogs = staticBlogs;
       setBlogs(fallbackBlogs);
-      console.log("Using fallback static blogs (all) on error");
     }
   };
 

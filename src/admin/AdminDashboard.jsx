@@ -74,7 +74,6 @@ const AdminDashboard = () => {
       const formLeadsRes = await axios.get(
         `${API_BASE_URL}/formleads/count/all`,
       );
-      console.log("Counts fetched:", jobRes)
       // alert(jobRes.data.count);
       setJobCount(jobRes.data.count);
 

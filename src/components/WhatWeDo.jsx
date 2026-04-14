@@ -20,12 +20,7 @@ function WhatWeDo() {
   ];
 
   const communicationPoints = [
-    "AI-powered inbound and outbound contact centre platforms",
-    "Intelligent IVR systems and smart call routing",
     "CRM-integrated sales and communication systems",
-    "Automated lead management and service workflows",
-    "Omnichannel customer engagement (Voice, WhatsApp, Email, Chat)",
-    "Real-time analytics, monitoring, and performance reporting",
   ];
 
   return (

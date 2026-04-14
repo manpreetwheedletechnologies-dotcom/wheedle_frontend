@@ -4,7 +4,6 @@ function ServicesCTA() {
 const[phone, setPhone]= useState("")
    const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Subscribing:", phone);
     setPhone("");
   };
   return (

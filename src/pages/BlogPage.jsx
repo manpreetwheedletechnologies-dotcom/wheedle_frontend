@@ -25,10 +25,13 @@ function BlogPage() {
           backgroundImage: "url('/BG.png')",
         }}>
       <BlogHero />
+      <BlogCollection />
       <BlogCategories />
       <BlogLatest />
-      <BlogCollection />
+      <Testimonials />
+
       {/* <BlogNewsletter /> */}
+
       <Newsletter
         content={{
           titleLine1: "Subscribe to Our",
@@ -44,7 +47,6 @@ function BlogPage() {
           successMessage: "Thanks for subscribing 🎉",
         }}
       />
-      <Testimonials />
       
       <Footer />
       </div>

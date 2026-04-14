@@ -110,7 +110,7 @@ const Career = () => {
                 {[
                   {
                     img: "/Group1.png",
-                    title: "Innovative Freedome",
+                    title: "Innovative Freedom",
                     desc: "We are always on the lookout for innovative ideas that can be tomorrow’s success blueprint.",
                   },
                   {

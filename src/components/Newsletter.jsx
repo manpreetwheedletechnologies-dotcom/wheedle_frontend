@@ -86,19 +86,6 @@ function Newsletter({
     }
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (!value) return;
-
-  //   console.log("Submitted:", value);
-
-  //   setShowPopup(true);
-  //   setValue("");
-
-  //   setTimeout(() => {
-  //     setShowPopup(false);
-  //   }, 3000);
-  // };
 
   return (
     <section className="w-full py-2 lg:py-24 min-h-[20vh] relative">

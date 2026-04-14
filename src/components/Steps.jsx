@@ -47,14 +47,11 @@ function Steps() {
       }));
 
       if (formatted.length === 0) {
-        console.log('No valid API steps, using static fallback');
         setSteps(staticSteps);
       } else {
-        console.log('Using API formatted steps:', formatted);
         setSteps(formatted);
       }
     } catch (error) {
-      console.error("Failed to fetch steps, using static fallback:", error);
       setSteps(staticSteps);
     }
   };

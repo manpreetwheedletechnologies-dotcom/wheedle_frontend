@@ -27,7 +27,6 @@ const BlogDetails = () => {
       const staticBlog = blogs.find(b => b.slug === slug);
       if (staticBlog) {
         setBlog(staticBlog);
-        console.log("Using static blog for", slug);
       }
     }
   };
@@ -87,90 +86,70 @@ const BlogDetails = () => {
         className="w-full -mt-24 sm:-mt-30 lg:-mt-20 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/BG.png')" }}
       >
-        <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10 py-20 space-y-14 text-gray-300 leading-8">
-          {/* BLOG IMAGE + INTRO */}
-          <div className="flex flex-col lg:flex-row items-center gap-10">
-            <div className="w-full lg:w-1/2">
-              <img
-                src={blog.blogImage?.startsWith('/') || blog.blogImage?.startsWith('http') ? blog.blogImage : `${API_BASE_URL}/uploads/${blog.blogImage}/`}
-                alt={blog.title}
-                className="rounded-2xl w-full object-cover border border-white/10"
-              />
-            </div>
-            <div className="w-full lg:w-1/2 space-y-6">
-              {normalizedContent.intro.length > 0 && normalizedContent.intro.map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
-            </div>
-          </div>
+<div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10 py-20 space-y-14 text-gray-300 leading-8">
+  
+  {/* BLOG IMAGE + INTRO */}
+  <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8 flex flex-col lg:flex-row items-center gap-10">
+    <div className="w-full lg:w-1/2">
+      <img
+        src={blog.blogImage?.startsWith('/') || blog.blogImage?.startsWith('http') ? blog.blogImage : `${API_BASE_URL}/uploads/${blog.blogImage}/`}
+        alt={blog.title}
+        className="rounded-2xl w-full object-cover border border-white/10"
+      />
+    </div>
+    <div className="w-full lg:w-1/2 space-y-6">
+      {normalizedContent.intro.length > 0 && normalizedContent.intro.map((para, i) => (
+        <p key={i}>{para}</p>
+      ))}
+    </div>
+  </div>
 
-          {/* WHAT IS */}
-          <div>
-            <h2 className="text-2xl font-semibold text-white mb-6">
-              {titles.whatIs}
-            </h2>
-            {normalizedContent.whatIs.length > 0 && normalizedContent.whatIs.map((para, i) => (
-              <p key={i} className="mb-4">
-                {para}
-              </p>
-            ))}
-          </div>
+  {/* WHAT IS */}
+  <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8">
+    <h2 className="text-2xl font-semibold text-white mb-6">{titles.whatIs}</h2>
+    {normalizedContent.whatIs.map((para, i) => (
+      <p key={i} className="mb-4">{para}</p>
+    ))}
+  </div>
 
-          {/* BENEFITS */}
-          <div>
-            <h2 className="text-2xl font-semibold text-white mb-6">
-              {titles.benefits}
-            </h2>
+  {/* BENEFITS */}
+  <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8">
+    <h2 className="text-2xl font-semibold text-white mb-6">{titles.benefits}</h2>
+    {normalizedContent.benefits.description && (
+      <p className="mb-4">{normalizedContent.benefits.description}</p>
+    )}
+    <ul className="list-disc list-inside space-y-4">
+      {normalizedContent.benefits.items.map((item, i) => (
+        <li key={i}><strong>{item.title}:</strong> {item.desc}</li>
+      ))}
+    </ul>
+  </div>
 
-            {/* Render benefits description if available */}
-            {normalizedContent.benefits.description && (
-              <p className="mb-4">{normalizedContent.benefits.description}</p>
-            )}
+  {/* FUTURE */}
+  <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8">
+    <h2 className="text-2xl font-semibold text-white mb-6">{titles.future}</h2>
+    <p>{blog.content.future}</p>
+  </div>
 
-            {/* Render benefits items */}
-            <ul className="list-disc list-inside space-y-4">
-              {normalizedContent.benefits.items.map((item, i) => (
-                <li key={i}>
-                  <strong>{item.title}:</strong> {item.desc}
-                </li>
-              ))}
-            </ul>
-          </div>
+  {/* HOW IT WORKS */}
+  <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8">
+    <h2 className="text-2xl font-semibold text-white mb-6">{titles.howItWorks}</h2>
+    <ol className="list-decimal list-inside space-y-4 mt-4">
+      {normalizedContent.howItWorks.map((step, i) => (
+        <li key={i}><strong>{step.title}:</strong> {step.desc}</li>
+      ))}
+    </ol>
+  </div>
 
-          {/* FUTURE */}
-          <div>
-            <h2 className="text-2xl font-semibold text-white mb-6">
-              {titles.future}
-            </h2>
-            <p>{blog.content.future}</p>
-          </div>
+  {/* FINAL */}
+  <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8">
+    <h2 className="text-2xl font-semibold text-white mb-6">{titles.final}</h2>
+    {normalizedContent.final.map((para, i) => (
+      <p key={i} className="mb-4">{para}</p>
+    ))}
+  </div>
 
-          {/* HOW IT WORKS */}
-          <div>
-            <h2 className="text-2xl font-semibold text-white mb-6">
-              {titles.howItWorks}
-            </h2>
-            <ol className="list-decimal list-inside space-y-4 mt-4">
-            {normalizedContent.howItWorks.length > 0 && normalizedContent.howItWorks.map((step, i) => (
-                <li key={i}>
-                  <strong>{step.title}:</strong> {step.desc}
-                </li>
-              ))}
-            </ol>
-          </div>
-
-          {/* FINAL */}
-          <div>
-            <h2 className="text-2xl font-semibold text-white mb-6">
-              {titles.final}
-            </h2>
-            {normalizedContent.final.length > 0 && normalizedContent.final.map((para, i) => (
-              <p key={i} className="mb-4">
-                {para}
-              </p>
-            ))}
-          </div>
-        </div>
+</div>
       </section>
 
       <Footer />
