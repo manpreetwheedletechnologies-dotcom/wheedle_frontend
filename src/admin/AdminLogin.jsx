@@ -17,7 +17,6 @@ const AdminLogin = () => {
       });
 
       localStorage.setItem("adminToken", res.data.token);
-      console.log("Login successful, token stored:", res); // ✅ Debug log
       if (res.status === 200) {
 
         window.location.href = "/admin/dashboard";
@@ -25,7 +24,6 @@ const AdminLogin = () => {
 
       // window.location.href = "/admin/dashboard";
     } catch (err) {
-      console.error("Login error:", err); // ✅ Debug log
     }
   };
 

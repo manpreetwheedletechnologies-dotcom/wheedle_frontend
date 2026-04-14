@@ -15,7 +15,6 @@ const ViewAllTestimonials = ({ onClose }) => {
     setLoading(true);
     try {
       const res = await fetch(`${API_BASE_URL}/testimonial/`);
-      console.log("Fetched testimonials:", res);
       const data = await res.json();
       setTestimonials(data);
     } catch (_) {

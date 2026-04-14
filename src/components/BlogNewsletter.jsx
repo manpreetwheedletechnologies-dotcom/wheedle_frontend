@@ -4,7 +4,6 @@ function BlogNewsletter() {
   const [email, setEmail] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Subscribing:", email);
     setEmail("");
   };
   return (

@@ -5,7 +5,6 @@ function AboutCTA() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Subscribing:", phone);
     setPhone("");
   };
   return (
