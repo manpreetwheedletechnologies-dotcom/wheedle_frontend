@@ -108,24 +108,24 @@ function Testimonials() {
     if (position === "center") {
       return { ...baseStyles, left: "50%", transform: "translateX(-50%)", zIndex: 3, opacity: 1 };
     } else if (position === "left") {
-  return {
-    ...baseStyles,
-    left: "calc(50% - 480px)", // ⬅️ was 380px
-    transform: "scale(0.85)",
-    zIndex: 2,
-    opacity: 0.6,
-    cursor: "pointer",
-  };
-} else if (position === "right") {
-  return {
-    ...baseStyles,
-    left: "calc(50% + 40px)", // ⬅️ was 20px
-    transform: "scale(0.85)",
-    zIndex: 2,
-    opacity: 0.6,
-    cursor: "pointer",
-  };
-}
+      return {
+        ...baseStyles,
+        left: "calc(50% - 480px)", // ⬅️ was 380px
+        transform: "scale(0.85)",
+        zIndex: 2,
+        opacity: 0.6,
+        cursor: "pointer",
+      };
+    } else if (position === "right") {
+      return {
+        ...baseStyles,
+        left: "calc(50% + 40px)", // ⬅️ was 20px
+        transform: "scale(0.85)",
+        zIndex: 2,
+        opacity: 0.6,
+        cursor: "pointer",
+      };
+    }
   };
 
   const handleCardClick = (position, index, card) => {
@@ -242,7 +242,7 @@ function Testimonials() {
                   </p>
 
                   <div className="flex items-center gap-3.5 mt-auto">
-                    <div className="h-30 w-30 flex items-center justify-center overflow-hidden rounded-full border border-white/20 ">
+                    <div className="h-30 w-30 flex items-center justify-center overflow-hidden rounded-full  ">
                       <img
                         src={
                           useStatic
@@ -278,9 +278,8 @@ function Testimonials() {
                   setCurrentIndex(idx);
                   setTimeout(() => setIsAnimating(false), 500);
                 }}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  idx === currentIndex ? "w-8 bg-[#3352DF]" : "w-2 bg-white/30 hover:bg-white/50"
-                }`}
+                className={`h-2 rounded-full transition-all duration-300 ${idx === currentIndex ? "w-8 bg-[#3352DF]" : "w-2 bg-white/30 hover:bg-white/50"
+                  }`}
                 aria-label={`Go to testimonial ${idx + 1}`}
               />
             ))}
