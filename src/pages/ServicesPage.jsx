@@ -13,8 +13,8 @@ function ServicesPage() {
     <div className="w-full min-h-screen">
 
       <SEO
-      title="Custom AI Services for Business Growth | Contact Wheedle Technologies"
-        description="Wheedle Technologies provides AI-powered automation, chatbot development, and enterprise AI solutions for modern businesses."
+      title="AI Services & Solutions | Wheedle Technologies "
+        description="Explore AI services by Wheedle Technologies including automation, development & consulting to streamline operations and boost growth."
         url="https://wheedletechnologies.ai/services"
       />
       <Header />

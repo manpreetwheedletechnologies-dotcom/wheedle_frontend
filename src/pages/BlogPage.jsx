@@ -15,8 +15,8 @@ function BlogPage() {
   return (
     <div className="w-full min-h-screen">
       <SEO
-      title="AI Insights & Tech Blog – Wheedle Technologies"
-        description="Explore expert AI insights, tech trends, automation tips, and business innovation articles on the Wheedle Technologies blog."
+      title="AI Blog & Insights | Wheedle Technologies"
+        description="Read AI blogs, trends & automation insights from Wheedle Technologies to stay ahead in digital transformation and innovation."
         url="https://wheedletechnologies.ai/blog"
       />
       <Header />

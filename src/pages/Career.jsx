@@ -19,8 +19,8 @@ const Career = () => {
   return (
     <>
      <SEO
-     title="Careers at Wheedle Technologies – Join Our AI Team"
-        description="Explore career opportunities at Wheedle Technologies, grow your AI and automation expertise, and join a team driving innovation in smart tech solutions."
+     title="Careers at Wheedle Technologies | Join Our Team"
+        description="Explore careers at Wheedle Technologies. Join our AI team to build innovative automation, development & intelligent solutions. "
         url="https://wheedletechnologies.ai/career"
      />
       {/* ================= HEADER / HERO SECTION ================= */}
