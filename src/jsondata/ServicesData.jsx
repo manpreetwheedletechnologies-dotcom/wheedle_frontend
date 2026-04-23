@@ -5,9 +5,9 @@ const servicesData = {
   web: {
     slug: "ai-web-engineering-agents",
     seo: {
-    title: "AI Web Engineering Agents | Smart Web Automation",
+    title: "AI Web Engineering Agents | Wheedle Technologies ",
     description:
-      "Build, optimize, and manage websites using AI web engineering agents that automate development, performance, and scalability for modern businesses.",
+      "Build scalable websites using AI web engineering agents by Wheedle Technologies for faster, smarter and automated web solutions.",
     url: "https://wheedletechnologies.ai/our-service/ai-web-engineering-agents",
   },
     /* ================= HERO DATA ================= */
@@ -105,9 +105,9 @@ const servicesData = {
   app: {
     slug: "ai-app-development-agent",
     seo: {
-    title: "Available AI App Development Agent |At Wheedle Technologies",
+    title: "AI App Development Agent | Wheedle Technologies",
     description:
-      "",
+      "Create intelligent mobile & web apps using AI app development agents by Wheedle Technologies for fast and scalable solutions.",
     url: "https://wheedletechnologies.ai/our-service/ai-app-development-agent",
   },
     /* ================= HERO DATA ================= */
@@ -205,9 +205,9 @@ const servicesData = {
   software: {
     slug: "software-development-agentic-platform",
      seo: {
-    title: "Agentic Software Development Platform | AI Coding",
+    title: "Agentic Software Platform | Wheedle Technologies",
     description:
-      "Accelerate software delivery with an AI agentic platform that automates coding, debugging, testing, and lifecycle management efficiently.",
+      "Develop smarter software using agentic platforms by Wheedle Technologies to automate coding, deployment and system workflows. ",
     url: "https://wheedletechnologies.ai/our-service/software-development-agentic-platform",
   },
     /* ================= HERO DATA ================= */
@@ -304,9 +304,9 @@ const servicesData = {
   IT: {
     slug: "autonomous-it-consulting-and-advisory-agent",
      seo: {
-    title: "Autonomous IT Consulting Agent | Smart Tech Advisory",
+    title: "AI IT Consulting & Advisory | Wheedle Technologies",
     description:
-      "Get data-driven IT strategy, automation insights, and technology recommendations through autonomous AI consulting and advisory agents.",
+      "Get autonomous IT consulting & advisory services by Wheedle Technologies to optimize infrastructure and drive digital transformation. ",
     url: "https://wheedletechnologies.ai/our-service/autonomous-it-consulting-and-advisory-agent",
   },
     /* ================= HERO DATA ================= */
@@ -404,9 +404,9 @@ const servicesData = {
   digitalmarketing: {
     slug: "autonomous-digital-marketing-agents",
      seo: {
-    title: "Autonomous Digital Marketing Agents | AI Growth Tools",
+    title: "AI Digital Marketing Agents | Wheedle Technologies",
     description:
-      "Boost growth using AI marketing agents that automate campaigns, SEO, analytics, content optimization, and customer targeting.",
+      "Automate campaigns using AI digital marketing agents by Wheedle Technologies to boost ROI, leads and marketing performance. ",
     url: "https://wheedletechnologies.ai/our-service/autonomous-digital-marketing-agents",
   },
     /* ================= HERO DATA ================= */
@@ -504,9 +504,9 @@ const servicesData = {
   graphicdesigning: {
     slug: "ai-graphic-design-automation-agent",
       seo: {
-    title: "AI Graphic Design Automation | Creative AI Agent",
+    title: "AI Graphic Design Automation | Wheedle Technologies ",
     description:
-      "Automate branding and visual creation with AI graphic design agents that generate social media graphics, ads, and marketing assets instantly.",
+      "Create stunning visuals using AI graphic design automation by Wheedle Technologies for faster and consistent branding. ",
     url: "https://wheedletechnologies.ai/our-service/ai-graphic-design-automation-agent",
   },
     /* ================= HERO DATA ================= */
@@ -604,9 +604,9 @@ const servicesData = {
   UI: {
     slug: "autonomous-ui-ux-design-intelligence",
     seo: {
-    title: "Autonomous UI UX Design Intelligence | AI Experience",
+    title: "AI UI UX Design Intelligence | Wheedle Technologies ",
     description:
-      "Enhance user experience with AI-Driven UI/UX Intelligence that analyzes behavior, designs interfaces, and optimizes digital journeys.",
+      "Enhance user experience with AI UI/UX design intelligence by Wheedle Technologies for intuitive, data-driven design solutions. ",
     url: "https://wheedletechnologies.ai/our-service/autonomous-ui-ux-design-intelligence",
   },
     /* ================= HERO DATA ================= */
@@ -704,9 +704,9 @@ const servicesData = {
   AIsolutions: {
     slug: "ai-solutions-and-intelligent-automation",
     seo: {
-    title: "AI Solutions & Intelligence Automation Services | 24X7 Support",
+    title: "AI Solutions & Automation | Wheedle Technologies",
     description:
-      "Transform operations with AI solutions and intelligent automation that streamline workflows, improve efficiency, and scale business processes.",
+      "Transform operations with AI solutions & intelligent automation by Wheedle Technologies to improve efficiency and scalability.",
     url: "https://wheedletechnologies.ai/our-service/ai-solutions-and-intelligent-automation",
   },
     /* ================= HERO DATA ================= */

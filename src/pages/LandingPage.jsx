@@ -15,8 +15,8 @@ function LandingPage({ openBot }) {
   return (
     <>
       <SEO
-       title="AI Automation & Software Experts | Wheedle Technologies"
-        description="Transform your business with AI-driven automation, custom software, UI/UX design & intelligent AI agents from Wheedle Technologies for smarter digital experiences."
+       title="AI Automation & Development | Wheedle Technologies"
+        description="Scale your business with AI automation, development & consulting services by Wheedle Technologies. Build smarter workflows & grow faster. "
         url="https://wheedletechnologies.ai/"
       />
       <Header />

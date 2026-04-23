@@ -21,8 +21,8 @@ function AboutPage() {
   return (
     <div className="w-full min-h-screen">
       <SEO
-        title="About Wheedle Technologies | AI Solutions Experts"
-        description=" Learn about Wheedle Technologies, our mission, AI expertise, and how we deliver smart automation, custom AI development, and innovative solutions worldwide."
+        title="About Us | Wheedle Technologies AI Experts"
+        description="Know Wheedle Technologies, a leading AI company delivering automation, consulting & custom solutions to accelerate business growth. "
         url="https://wheedletechnologies.ai/about"
       />
       <Header />

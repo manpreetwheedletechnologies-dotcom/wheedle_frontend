@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Badge from "../components/Badge";
+import SEO from "../components/SEO";
 
 /* ---------- COMPONENTS ---------- */
 
@@ -26,6 +27,12 @@ const PolicyCard = ({ title, text, list }) => (
 const PrivacyPolicy = () => {
   return (
     <div className="w-full min-h-screen bg-black text-white">
+      <SEO
+      title="Privacy Policy | Wheedle Technologies"
+        description="Read the Privacy Policy of Wheedle Technologies to understand how we collect, use and protect your personal data and information. "
+        url="https://wheedletechnologies.ai/privacy-policy"
+      />
+
       <Header />
 
       {/* HERO */}
