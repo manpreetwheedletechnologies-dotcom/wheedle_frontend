@@ -9,6 +9,23 @@ import {
   Send,
   CheckCircle2,
   Pencil,
+
+  UserPlus,
+  Building2,
+  Globe,
+  Smartphone,
+  Megaphone,
+  BrainCircuit,
+  Bot,
+  Search,
+  BarChart3,
+  Briefcase,
+  ShoppingCart,
+  LayoutTemplate,
+  Workflow,
+  Cpu,
+  Sparkles,
+  Boxes,
 } from "lucide-react";
 
 const WhebotPage = ({ isMinimized, setIsMinimized }) => {
@@ -20,6 +37,7 @@ const WhebotPage = ({ isMinimized, setIsMinimized }) => {
   const [chatStep, setChatStep] = useState("select_type");
   const [selectedType, setSelectedType] = useState("");
   const [showConfirmBox, setShowConfirmBox] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const [formData, setFormData] = useState({
     service: "",
@@ -43,6 +61,52 @@ const chatBodyRef = useRef(null);
 const userScrollingRef = useRef(false);
 const autoScrollLockRef = useRef(false);
 const scrollTimerRef = useRef(null);
+/* ================= ICON HELPERS ================= */
+
+const getTypeIcon = (item) =>
+  item === "New User" ? UserPlus : Building2;
+
+const getCompanyIcon = () => Building2;
+
+const getServiceIcon = (item) => {
+  const map = {
+    "Web Development": Globe,
+    "App Development": Smartphone,
+    "Digital Marketing": Megaphone,
+    "AI Solution & Intelligent Agent": BrainCircuit,
+    Other: Boxes,
+  };
+
+  return map[item] || Sparkles;
+};
+
+const getSubOptionIcon = (item) => {
+  const map = {
+    "Business Website": Briefcase,
+    "Ecommerce Website": ShoppingCart,
+    "Landing Page": LayoutTemplate,
+    "Custom Portal": Globe,
+
+    "Android App": Smartphone,
+    "iOS App": Smartphone,
+    "Both Android & iOS": Smartphone,
+    "Internal App": Building2,
+
+    "Leads Generation": Megaphone,
+    "Sales Growth": BarChart3,
+    "Brand Awareness": Sparkles,
+    "SEO Ranking": Search,
+
+    "AI Chatbot": Bot,
+    "Business Automation": Workflow,
+    "CRM AI": BrainCircuit,
+    "Custom AI Agent": Cpu,
+
+    Other: Boxes,
+  };
+
+  return map[item] || Sparkles;
+};
 
   /* -------------------------------- HELPERS -------------------------------- */
 
@@ -146,6 +210,30 @@ useEffect(() => {
   "Purify India",
 ];
 
+
+const SelectionButton = ({
+  label,
+  onClick,
+  Icon,
+}) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className="w-full cursor-pointer flex items-center gap-3 px-3 py-2 rounded-full bg-black border border-white/10 text-white hover:border-[#0B2CC3] hover:bg-gradient-to-r hover:from-[#040010] hover:to-[#0B2CC3] hover:shadow-[0_0_14px_rgba(11,44,195,0.35)] active:scale-[0.98] transition-all duration-300"
+  >
+    <span className="w-7 h-7 rounded-full bg-[#0B2CC3]/15 border border-[#0B2CC3]/40 flex items-center justify-center shrink-0">
+      <Icon
+        size={14}
+        className="text-[#7ea2ff]"
+      />
+    </span>
+
+    <span className="text-[13px] font-medium text-left leading-tight">
+      {label}
+    </span>
+  </button>
+);
+
   /* -------------------------- INITIAL CHAT -------------------------- */
 
   const getInitialMessages = () => [
@@ -228,69 +316,84 @@ useEffect(() => {
 
   /* -------------------------- MESSAGE ENGINE -------------------------- */
 
-  const typeWriterEffect = (text) => {
-    let i = 0;
+ const typeWriterEffect = (text, callback) => {
+  let i = 0;
 
-    const interval = setInterval(() => {
-      i++;
+  const interval = setInterval(() => {
+    i++;
 
-      setMessages((prev) => {
-        const updated = [...prev];
-        const last = updated[updated.length - 1];
+    setMessages((prev) => {
+      const updated = [...prev];
+      const last = updated[updated.length - 1];
 
-        if (
-          last &&
-          last.type === "bot" &&
-          !last.isComplete
-        ) {
-          last.displayText = text.slice(0, i);
+      if (last && last.type === "bot" && !last.isComplete) {
+        updated[updated.length - 1] = {
+          ...last,
+          displayText: text.slice(0, i),
+        };
 
-          if (i >= text.length) {
-            last.isComplete = true;
-            clearInterval(interval);
-          }
+        if (i >= text.length) {
+          updated[updated.length - 1] = {
+            ...last,
+            displayText: text,
+            isComplete: true,
+          };
+
+          clearInterval(interval);
+
+          if (callback) callback();
         }
+      }
 
-        return updated;
-      });
-    }, 35);
-  };
-
- const addUserMessage = (text) => {
-  autoScrollLockRef.current = false;
-
-  setMessages((prev) => [
-    ...prev,
-    {
-      type: "user",
-      text,
-      isComplete: true,
-    },
-  ]);
+      return updated;
+    });
+  }, 35);
 };
 
-  const addBotMessage = async (
-  text,
-  extra = {}
-) => {
+const addUserMessage = (text) => {
+  autoScrollLockRef.current = false;
+
+  setMessages((prev) => {
+    const cleaned = prev.map((msg) => ({
+      ...msg,
+      showOptions: false,
+      showServices: false,
+      showSubOptions: false,
+      showClientCompanies: false,
+    }));
+
+    return [
+      ...cleaned,
+      {
+        type: "user",
+        text,
+        isComplete: true,
+      },
+    ];
+  });
+};
+
+const addBotMessage = async (text, extra = {}) => {
   autoScrollLockRef.current = false;
 
   setIsTyping(true);
   await sleep(550);
   setIsTyping(false);
 
-  setMessages((prev) => [
-    ...prev,
-    {
-      type: "bot",
-      text,
-      displayText: "",
-      isComplete: false,
-      ...extra,
-    },
-  ]);
+  return new Promise((resolve) => {
+    setMessages((prev) => [
+      ...prev,
+      {
+        type: "bot",
+        text,
+        displayText: "",
+        isComplete: false,
+        ...extra,
+      },
+    ]);
 
-  typeWriterEffect(text);
+    typeWriterEffect(text, resolve);
+  });
 };
   const addStaticBot = (
   text,
@@ -865,109 +968,107 @@ if (chatStep === "client_mobile") {
                   )}
 
                   {/* USER TYPE */}
-                  {msg.showOptions && (
-                    <div className="mt-3 flex flex-col gap-2">
-                      {[
-                        "Wheedle Client",
-                        "New User",
-                      ].map((item) => (
-                        <label
-                          key={item}
-                          className="flex gap-2 items-center cursor-pointer"
-                        >
-                          <input
-                            type="checkbox"
-                            className="accent-blue-600 w-4 h-4"
-                            onChange={() =>
-                              handleSelectType(
-                                item ===
-                                  "New User"
-                                  ? "new_user"
-                                  : "wheedle_client"
-                              )
-                            }
-                          />
-                          {item}
-                        </label>
-                      ))}
-                    </div>
-                  )}
+                 {msg.showOptions && (
+  <div className="mt-3">
+    <div className="text-[12px] text-white/70 mb-2 px-1">
+      Please choose one option
+    </div>
+
+    <div className="space-y-2">
+      {["Wheedle Client", "New User"].map((item) => {
+        const Icon = getTypeIcon(item);
+
+        return (
+          <SelectionButton
+            key={item}
+            label={item}
+            Icon={Icon}
+            onClick={() =>
+              handleSelectType(
+                item === "New User"
+                  ? "new_user"
+                  : "wheedle_client"
+              )
+            }
+          />
+        );
+      })}
+    </div>
+  </div>
+)}
 
 
                   {/* CLIENT COMPANIES */}
 {msg.showClientCompanies && (
-  <div className="mt-3 flex flex-col gap-2">
-    {clientCompanies.map((item) => (
-      <label
-        key={item}
-        className="flex gap-2 items-center cursor-pointer"
-      >
-        <input
-          type="checkbox"
-          className="accent-blue-600 w-4 h-4"
-          onChange={() =>
+  <div className="mt-3">
+    <div className="text-[12px] text-white/70 mb-2 px-1">
+      Select your company
+    </div>
+
+    <div className="space-y-2">
+      {clientCompanies.map((item) => (
+        <SelectionButton
+          key={item}
+          label={item}
+          Icon={getCompanyIcon()}
+          onClick={() =>
             handleClientCompany(item)
           }
         />
-        {item}
-      </label>
-    ))}
+      ))}
+    </div>
   </div>
 )}
 
                   {/* SERVICES */}
-                  {msg.showServices && (
-                    <div className="mt-3 flex flex-col gap-2">
-                      {[
-                        "Web Development",
-                        "App Development",
-                        "Digital Marketing",
-                        "AI Solution & Intelligent Agent",
-                        "Other",
-                      ].map((item) => (
-                        <label
-                          key={item}
-                          className="flex gap-2 items-center cursor-pointer"
-                        >
-                          <input
-                            type="checkbox"
-                            className="accent-blue-600 w-4 h-4"
-                            onChange={() =>
-                              handleServiceSelect(
-                                item
-                              )
-                            }
-                          />
-                          {item}
-                        </label>
-                      ))}
-                    </div>
-                  )}
+                 {msg.showServices && (
+  <div className="mt-3">
+    <div className="text-[12px] text-white/70 mb-2 px-1">
+      Select a service
+    </div>
+
+    <div className="space-y-2">
+      {[
+        "Web Development",
+        "App Development",
+        "Digital Marketing",
+        "AI Solution & Intelligent Agent",
+        "Other",
+      ].map((item) => (
+        <SelectionButton
+          key={item}
+          label={item}
+          Icon={getServiceIcon(item)}
+          onClick={() =>
+            handleServiceSelect(item)
+          }
+        />
+      ))}
+    </div>
+  </div>
+)}
 
                   {/* SUB OPTIONS */}
                   {msg.showSubOptions && (
-                    <div className="mt-3 flex flex-col gap-2">
-                      {msg.subItems.map(
-                        (item) => (
-                          <label
-                            key={item}
-                            className="flex gap-2 items-center cursor-pointer"
-                          >
-                            <input
-                              type="checkbox"
-                              className="accent-blue-600 w-4 h-4"
-                              onChange={() =>
-                                handleSubOption(
-                                  item
-                                )
-                              }
-                            />
-                            {item}
-                          </label>
-                        )
-                      )}
-                    </div>
-                  )}
+  <div className="mt-3">
+    <div className="text-[12px] text-white/70 mb-2 px-1">
+      Choose requirement
+    </div>
+
+    <div className="space-y-2">
+      {msg.subItems.map((item) => (
+        <SelectionButton
+          key={item}
+          label={item}
+          Icon={getSubOptionIcon(item)}
+          onClick={() =>
+            handleSubOption(item)
+          }
+        />
+      ))}
+    </div>
+  </div>
+)}
                 </div>
               </div>
             ))}
@@ -1109,6 +1210,7 @@ if (chatStep === "client_mobile") {
 };
 
 export default WhebotPage;
+
 
 
 
