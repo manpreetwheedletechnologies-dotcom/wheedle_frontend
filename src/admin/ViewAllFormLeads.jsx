@@ -1,320 +1,465 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Trash2, ChevronLeft, ChevronRight } from "lucide-react";
-import API_BASE_URL from "../config/api";
-import Toast from "./Toast";
+/**
+ * ViewAllFormLeads.jsx
+ * Displays all form leads with proper null/undefined handling
+ */
 
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import API_BASE_URL from "../config/api";
+import { Search, Mail, Phone, Building2, Calendar, Filter, Download, Trash2 } from "lucide-react";
+
+const authHeader = () => ({
+  Authorization: `Bearer ${localStorage.getItem("adminToken") || ""}`,
+});
+
+/* ─────────────────────────────────────────────
+   HELPERS
+───────────────────────────────────────────── */
+const formatDate = (iso) => {
+  if (!iso) return "N/A";
+  try {
+    return new Date(iso).toLocaleDateString([], { 
+      day: "2-digit", 
+      month: "short", 
+      year: "numeric" 
+    });
+  } catch {
+    return "N/A";
+  }
+};
+
+const formatTime = (iso) => {
+  if (!iso) return "";
+  try {
+    return new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  } catch {
+    return "";
+  }
+};
+
+const getInitials = (name) => {
+  if (!name || typeof name !== "string") return "?";
+  const parts = name.trim().split(" ").filter(p => p.length > 0);
+  if (parts.length === 0) return "?";
+  if (parts.length === 1) return (parts[0][0] || "?").toUpperCase();
+  return ((parts[0][0] || "") + (parts[parts.length - 1][0] || "")).toUpperCase();
+};
+
+const getDisplayName = (name) => {
+  if (!name || typeof name !== "string") return "Unknown";
+  return name.trim() || "Unknown";
+};
+
+/* ─────────────────────────────────────────────
+   COMPONENT
+───────────────────────────────────────────── */
 const ViewAllFormLeads = () => {
   const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedIds, setSelectedIds] = useState([]);
+  const [search, setSearch] = useState("");
+  const [filterStatus, setFilterStatus] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
-  const [toast, setToast] = useState(null);
-  const [selectedMessage, setSelectedMessage] = useState(null);
-
-  const statusColors = {
-    Pending: "bg-yellow-100 text-yellow-700",
-    Contacted: "bg-blue-100 text-blue-700",
-    Selected: "bg-green-100 text-green-700",
-    Rejected: "bg-red-100 text-red-700",
-  };
+  const [selectedLeads, setSelectedLeads] = useState([]);
+  const leadsPerPage = 10;
 
   useEffect(() => {
-    fetchFormLeads();
+    fetchLeads();
   }, []);
 
-  const fetchFormLeads = async () => {
-    setLoading(true);
+  const fetchLeads = async () => {
     try {
-      const res = await axios.get(`${API_BASE_URL}/formleads/`);
+      const res = await axios.get(`${API_BASE_URL}/formleads/`, {
+        headers: authHeader(),
+      });
       setLeads(res.data || []);
-    } catch (_) {
-      setToast({ message: "Error fetching form leads", type: "error" });
+    } catch (error) {
+      console.error("Error fetching form leads:", error);
+      setLeads([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const showSuccess = (msg) => setToast({ message: msg, type: "success" });
-  const showError = (msg) => setToast({ message: msg, type: "error" });
-
-  const updateStatus = async (id, status) => {
-    try {
-      await axios.put(`${API_BASE_URL}/formleads/${id}/`, { status });
-      showSuccess(`Status updated to ${status}`);
-      setLeads((prev) =>
-        prev.map((lead) => (lead._id === id ? { ...lead, status } : lead)),
-      );
-    } catch (_) {
-      showError("Failed to update status");
-    }
-  };
-
   const deleteLead = async (id) => {
     if (!window.confirm("Are you sure you want to delete this lead?")) return;
-
     try {
-      await axios.delete(`${API_BASE_URL}/formleads/${id}`);
-      showSuccess("Lead deleted successfully");
+      await axios.delete(`${API_BASE_URL}/formleads/delete/${id}`, {
+        headers: authHeader(),
+      });
       setLeads((prev) => prev.filter((lead) => lead._id !== id));
-    } catch (_) {
-      showError("Failed to delete lead");
+      setSelectedLeads((prev) => prev.filter((lid) => lid !== id));
+    } catch (error) {
+      console.error("Error deleting lead:", error);
+      alert("Failed to delete lead. Please try again.");
     }
   };
 
-  const handleBulkDelete = async () => {
-    if (selectedIds.length === 0) return;
-    if (
-      !window.confirm(
-        `Are you sure you want to delete ${selectedIds.length} selected leads?`,
-      )
-    )
-      return;
-
+  const bulkDelete = async () => {
+    if (selectedLeads.length === 0) return;
+    if (!window.confirm(`Delete ${selectedLeads.length} selected leads?`)) return;
     try {
-      setLoading(true);
       await Promise.all(
-        selectedIds.map((id) =>
-          axios.delete(`${API_BASE_URL}/formleads/${id}`),
-        ),
+        selectedLeads.map((id) =>
+          axios.delete(`${API_BASE_URL}/formleads/delete/${id}`, {
+            headers: authHeader(),
+          })
+        )
       );
-      showSuccess(`${selectedIds.length} leads deleted successfully`);
-      setSelectedIds([]);
-      fetchFormLeads();
-    } catch (_) {
-      showError("Failed to delete some leads");
-      fetchFormLeads();
+      setLeads((prev) => prev.filter((lead) => !selectedLeads.includes(lead._id)));
+      setSelectedLeads([]);
+    } catch (error) {
+      console.error("Error bulk deleting:", error);
+      alert("Failed to delete some leads. Please try again.");
+    }
+  };
+
+  const exportCSV = () => {
+    const headers = ["Name", "Email", "Mobile", "Company", "Service", "Requirement", "Date"];
+    const rows = filteredLeads.map((lead) => [
+      getDisplayName(lead.name),
+      lead.email || "",
+      lead.mobile || "",
+      lead.company || "",
+      lead.service || "",
+      lead.requirement || "",
+      formatDate(lead.created_at),
+    ]);
+
+    const csvContent = [headers, ...rows]
+      .map((row) => row.map((cell) => `"${cell}"`).join(","))
+      .join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `form-leads-${new Date().toISOString().split("T")[0]}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedLeads.length === filteredLeads.length) {
+      setSelectedLeads([]);
+    } else {
+      setSelectedLeads(filteredLeads.map((lead) => lead._id));
     }
   };
 
   const toggleSelect = (id) => {
-    setSelectedIds((prev) =>
-      prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id],
+    setSelectedLeads((prev) =>
+      prev.includes(id) ? prev.filter((lid) => lid !== id) : [...prev, id]
     );
   };
 
-  const toggleSelectAll = () => {
-    if (selectedIds.length === currentItems.length && currentItems.length > 0) {
-      setSelectedIds([]);
-    } else {
-      setSelectedIds(currentItems.map((item) => item._id));
+  const filteredLeads = leads.filter((lead) => {
+    if (filterStatus !== "all") {
+      if (filterStatus === "new" && lead.status === "read") return false;
+      if (filterStatus === "read" && lead.status !== "read") return false;
+    }
+    
+    if (search) {
+      const searchLower = search.toLowerCase();
+      const nameMatch = getDisplayName(lead.name).toLowerCase().includes(searchLower);
+      const emailMatch = (lead.email || "").toLowerCase().includes(searchLower);
+      const mobileMatch = (lead.mobile || "").includes(search);
+      const companyMatch = (lead.company || "").toLowerCase().includes(searchLower);
+      if (!nameMatch && !emailMatch && !mobileMatch && !companyMatch) return false;
+    }
+    
+    return true;
+  });
+
+  const totalPages = Math.ceil(filteredLeads.length / leadsPerPage);
+  const paginatedLeads = filteredLeads.slice(
+    (currentPage - 1) * leadsPerPage,
+    currentPage * leadsPerPage
+  );
+
+  const markAsRead = async (id) => {
+    try {
+      await axios.patch(
+        `${API_BASE_URL}/formleads/update/${id}`,
+        { status: "read" },
+        { headers: authHeader() }
+      );
+      setLeads((prev) =>
+        prev.map((lead) => (lead._id === id ? { ...lead, status: "read" } : lead))
+      );
+    } catch (error) {
+      console.error("Error marking as read:", error);
     }
   };
 
-  // Pagination Logic
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = leads.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(leads.length / itemsPerPage);
+  const markAllAsRead = async () => {
+    const unreadIds = filteredLeads
+      .filter((lead) => lead.status !== "read")
+      .map((lead) => lead._id);
+    
+    if (unreadIds.length === 0) return;
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  const truncateMessage = (msg) => {
-    const words = msg.split(" ");
-    if (words.length <= 3) return msg;
-    return words.slice(0, 3).join(" ") + "...";
+    try {
+      await axios.patch(
+        `${API_BASE_URL}/formleads/mark-all-read`,
+        {},
+        { headers: authHeader() }
+      );
+      setLeads((prev) =>
+        prev.map((lead) => (unreadIds.includes(lead._id) ? { ...lead, status: "read" } : lead))
+      );
+    } catch (error) {
+      console.error("Error marking all as read:", error);
+    }
   };
 
   return (
-    <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-300 relative">
-      {toast && (
-        <Toast
-          message={toast.message}
-          type={toast.type}
-          onClose={() => setToast(null)}
-        />
-      )}
-
-      {selectedMessage && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl shadow-xl max-w-lg w-full p-6 relative">
-            <button
-              onClick={() => setSelectedMessage(null)}
-              className="absolute top-3 right-3 text-gray-500 hover:text-red-500 text-xl"
-            >
-              ✕
-            </button>
-
-            <h3 className="text-xl font-semibold mb-4 text-gray-800">
-              Full Message
-            </h3>
-
-            <p className="text-gray-600 leading-relaxed whitespace-pre-wrap">
-              {selectedMessage}
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+      <div className="p-6 border-b border-gray-200">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h2 className="text-xl font-bold text-gray-800">Form Leads</h2>
+            <p className="text-gray-500 text-sm mt-1">
+              {filteredLeads.length} leads {filterStatus !== "all" && `(${filterStatus})`}
             </p>
           </div>
-        </div>
-      )}
 
-      {/* HEADER */}
-      <div className="flex justify-between items-center mb-6">
-        <div>
-          <h2 className="text-3xl font-semibold text-gray-800">
-            All Form Leads
-          </h2>
-          <p className="text-gray-500 text-sm mt-1">
-            Total: {leads.length} leads
-          </p>
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={markAllAsRead}
+              className="px-4 py-2 text-sm bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition"
+            >
+              Mark All Read
+            </button>
+            <button
+              onClick={exportCSV}
+              className="px-4 py-2 text-sm bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition flex items-center gap-2"
+            >
+              <Download size={16} /> Export CSV
+            </button>
+            {selectedLeads.length > 0 && (
+              <button
+                onClick={bulkDelete}
+                className="px-4 py-2 text-sm bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition flex items-center gap-2"
+              >
+                <Trash2 size={16} /> Delete ({selectedLeads.length})
+              </button>
+            )}
+          </div>
         </div>
 
-        {selectedIds.length > 0 && (
-          <button
-            onClick={handleBulkDelete}
-            className="px-6 py-2.5 rounded-lg text-white font-semibold bg-red-500 hover:bg-red-600 transition flex items-center gap-2"
-          >
-            <Trash2 size={18} />
-            Delete Selected ({selectedIds.length})
-          </button>
+        <div className="flex flex-col sm:flex-row gap-4 mt-4">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+            <input
+              type="text"
+              placeholder="Search by name, email, mobile, company..."
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-purple-500"
+            />
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Filter size={18} className="text-gray-400" />
+            <select
+              value={filterStatus}
+              onChange={(e) => {
+                setFilterStatus(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-purple-500"
+            >
+              <option value="all">All</option>
+              <option value="new">New</option>
+              <option value="read">Read</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div className="overflow-x-auto">
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <div className="w-8 h-8 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin" />
+          </div>
+        ) : paginatedLeads.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-20 text-gray-400">
+            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+              <Mail size={24} />
+            </div>
+            <p className="text-lg font-medium">No leads found</p>
+            <p className="text-sm">Try adjusting your search or filters</p>
+          </div>
+        ) : (
+          <table className="w-full">
+            <thead>
+              <tr className="bg-gray-50 border-b border-gray-200">
+                <th className="px-6 py-3 text-left">
+                  <input
+                    type="checkbox"
+                    checked={selectedLeads.length === paginatedLeads.length && paginatedLeads.length > 0}
+                    onChange={toggleSelectAll}
+                    className="w-4 h-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                  />
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Name</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Contact</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Company</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Service</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Requirement</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Date</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {paginatedLeads.map((lead) => (
+                <tr
+                  key={lead._id}
+                  className={`hover:bg-gray-50 transition ${lead.status !== "read" ? "bg-blue-50/30" : ""}`}
+                >
+                  <td className="px-6 py-4">
+                    <input
+                      type="checkbox"
+                      checked={selectedLeads.includes(lead._id)}
+                      onChange={() => toggleSelect(lead._id)}
+                      className="w-4 h-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                    />
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-sm font-semibold">
+                        {getInitials(lead.name)}
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-800">
+                          {getDisplayName(lead.name)}
+                          {lead.status !== "read" && (
+                            <span className="ml-2 w-2 h-2 bg-blue-500 rounded-full inline-block" />
+                          )}
+                        </p>
+                        {lead.email && (
+                          <p className="text-xs text-gray-500">{lead.email}</p>
+                        )}
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="space-y-1">
+                      {lead.email && (
+                        <p className="text-sm text-gray-600 flex items-center gap-2">
+                          <Mail size={14} className="text-gray-400" />
+                          {lead.email}
+                        </p>
+                      )}
+                      {lead.mobile && (
+                        <p className="text-sm text-gray-600 flex items-center gap-2">
+                          <Phone size={14} className="text-gray-400" />
+                          {lead.mobile}
+                        </p>
+                      )}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <p className="text-sm text-gray-600 flex items-center gap-2">
+                      <Building2 size={14} className="text-gray-400" />
+                      {lead.company || "-"}
+                    </p>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-700">
+                      {lead.service || "N/A"}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <p className="text-sm text-gray-600 max-w-[200px] truncate">
+                      {lead.requirement || "-"}
+                    </p>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="text-sm">
+                      <p className="text-gray-800">{formatDate(lead.created_at)}</p>
+                      <p className="text-xs text-gray-400">{formatTime(lead.created_at)}</p>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-2">
+                      {lead.status !== "read" && (
+                        <button
+                          onClick={() => markAsRead(lead._id)}
+                          className="p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition"
+                          title="Mark as read"
+                        >
+                          <Calendar size={16} />
+                        </button>
+                      )}
+                      <button
+                        onClick={() => deleteLead(lead._id)}
+                        className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition"
+                        title="Delete"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         )}
       </div>
 
-      {loading ? (
-        <div className="flex justify-center items-center h-60">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-700"></div>
-        </div>
-      ) : (
-        <>
-          <div className="overflow-x-auto w-full">
-            <table className="min-w-[1100px] w-full border border-gray-300">
-              <thead>
-                <tr className="bg-gray-100 text-left text-gray-800">
-                  <th className="p-4 w-10 border text-center">
-                    <input
-                      type="checkbox"
-                      className="w-5 h-5 cursor-pointer"
-                      checked={
-                        selectedIds.length === currentItems.length &&
-                        currentItems.length > 0
-                      }
-                      onChange={toggleSelectAll}
-                    />
-                  </th>
-                  <th className="p-4 border font-semibold">Name</th>
-                  <th className="p-4 border font-semibold">Email</th>
-                  <th className="p-4 border font-semibold">Phone</th>
-                 <th className="p-4 border font-semibold min-w-[320px]">Message</th>
-                  <th className="p-4 border font-semibold">Date</th>
-                  <th className="p-4 border font-semibold min-w-[150px]">Status</th>
-                  <th className="p-4 border font-semibold text-center">
-                    Action
-                  </th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {currentItems.map((lead) => (
-                  <tr
-  key={lead._id}
-  className={`hover:bg-gray-50 transition whitespace-nowrap ${
-    selectedIds.includes(lead._id) ? "bg-blue-50" : ""
-  }`}
->
-                    <td className="p-4 border text-center">
-                      <input
-                        type="checkbox"
-                        className="w-5 h-5 cursor-pointer"
-                        checked={selectedIds.includes(lead._id)}
-                        onChange={() => toggleSelect(lead._id)}
-                      />
-                    </td>
-                    <td className="p-4 border font-medium text-gray-800">
-                      {lead.name}
-                    </td>
-                    <td className="p-4 border text-gray-600">{lead.email}</td>
-                    <td className="p-4 border text-gray-600">{lead.phone}</td>
-                    {/* <td className="p-4 border text-gray-600 max-w-xs truncate">{lead.message}</td> */}
-                    <td className="p-4 border text-gray-600 min-w-[320px]">
-                      {lead.message.split(" ").length > 3 ? (
-                        <>
-                          {truncateMessage(lead.message)}
-                          <button
-                            onClick={() => setSelectedMessage(lead.message)}
-                            className="text-blue-600 ml-2 hover:underline font-medium"
-                          >
-                            Read more
-                          </button>
-                        </>
-                      ) : (
-                        lead.message
-                      )}
-                    </td>
-
-                    <td className="p-4 border text-gray-500">
-                      {new Date(lead.createdAt).toLocaleDateString()}
-                    </td>
-                    <td className="p-4 border">
-                      <select
-                        value={lead.status}
-                        onChange={(e) => updateStatus(lead._id, e.target.value)}
-                        className={`px-3 py-2 rounded-lg font-medium cursor-pointer outline-none min-w-[130px] ${
-                          statusColors[lead.status] ||
-                          "bg-gray-100 text-gray-700"
-                        }`}
-                      >
-                        <option>Pending</option>
-                        <option>Contacted</option>
-                        <option>Selected</option>
-                        <option>Rejected</option>
-                      </select>
-                    </td>
-
-                    <td className="p-4 border text-center">
-                      <Trash2
-                        size={22}
-                        className="text-red-500 cursor-pointer hover:text-red-700 transition transform hover:scale-110 inline-block"
-                        onClick={() => deleteLead(lead._id)}
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            {leads.length === 0 && (
-              <div className="text-center py-10 text-gray-500 border rounded-b-xl">
-                No leads found.
-              </div>
-            )}
+      {totalPages > 1 && (
+        <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+          <p className="text-sm text-gray-500">
+            Showing {(currentPage - 1) * leadsPerPage + 1} to{" "}
+            {Math.min(currentPage * leadsPerPage, filteredLeads.length)} of{" "}
+            {filteredLeads.length} leads
+          </p>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="px-3 py-1.5 text-sm border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Previous
+            </button>
+            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+              let pageNum;
+              if (totalPages <= 5) {
+                pageNum = i + 1;
+              } else if (currentPage <= 3) {
+                pageNum = i + 1;
+              } else if (currentPage >= totalPages - 2) {
+                pageNum = totalPages - 4 + i;
+              } else {
+                pageNum = currentPage - 2 + i;
+              }
+              return (
+                <button
+                  key={pageNum}
+                  onClick={() => setCurrentPage(pageNum)}
+                  className={`w-8 h-8 text-sm rounded-lg ${
+                    currentPage === pageNum
+                      ? "bg-purple-600 text-white"
+                      : "border border-gray-200 hover:bg-gray-50"
+                  }`}
+                >
+                  {pageNum}
+                </button>
+              );
+            })}
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              className="px-3 py-1.5 text-sm border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
           </div>
-
-          {/* PAGINATION */}
-          {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-4 mt-8">
-              <button
-                disabled={currentPage === 1}
-                onClick={() => paginate(currentPage - 1)}
-                className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 hover:bg-gray-100 transition"
-              >
-                <ChevronLeft size={20} />
-              </button>
-
-              <div className="flex gap-2">
-                {[...Array(totalPages)].map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => paginate(i + 1)}
-                    className={`w-10 h-10 rounded-lg border transition ${
-                      currentPage === i + 1
-                        ? "bg-[#2E1A6D] text-white border-[#2E1A6D]"
-                        : "border-gray-300 hover:bg-gray-100"
-                    }`}
-                  >
-                    {i + 1}
-                  </button>
-                ))}
-              </div>
-
-              <button
-                disabled={currentPage === totalPages}
-                onClick={() => paginate(currentPage + 1)}
-                className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 hover:bg-gray-100 transition"
-              >
-                <ChevronRight size={20} />
-              </button>
-            </div>
-          )}
-        </>
+        </div>
       )}
     </div>
   );

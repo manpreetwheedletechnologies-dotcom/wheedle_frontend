@@ -11,6 +11,7 @@ const ViewAllContacts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [toast, setToast] = useState(null);
+  const [search, setSearch] = useState("");
 
   const statusColors = {
     Pending: "bg-yellow-100 text-yellow-700",
@@ -23,12 +24,22 @@ const ViewAllContacts = () => {
     fetchContacts();
   }, []);
 
+  // ✅ FIXED API HANDLING
   const fetchContacts = async () => {
     setLoading(true);
     try {
       const res = await axios.get(`${API_BASE_URL}/contact/`);
-      setContacts(res.data.contacts || []);
-    } catch (_) {
+
+      console.log("API RESPONSE 👉", res.data);
+
+      // 🔥 Handles both formats:
+      // 1. { contacts: [...] }
+      // 2. [ ... ]
+      const data = res.data?.contacts || res.data || [];
+
+      setContacts(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error(err);
       setToast({ message: "Failed to fetch applications", type: "error" });
     } finally {
       setLoading(false);
@@ -51,32 +62,33 @@ const ViewAllContacts = () => {
   };
 
   const deleteContact = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this application?")) return;
+    if (!window.confirm("Delete this application?")) return;
 
     try {
       await axios.delete(`${API_BASE_URL}/contact/${id}`);
-      showSuccess("Application deleted successfully");
+      showSuccess("Deleted successfully");
       fetchContacts();
     } catch (_) {
-      showError("Failed to delete application");
+      showError("Failed to delete");
     }
   };
 
   const handleBulkDelete = async () => {
     if (selectedIds.length === 0) return;
-    if (!window.confirm(`Are you sure you want to delete ${selectedIds.length} selected applications?`)) return;
+    if (!window.confirm(`Delete ${selectedIds.length} selected?`)) return;
 
     try {
       setLoading(true);
       await Promise.all(
-        selectedIds.map((id) => axios.delete(`${API_BASE_URL}/contact/${id}`))
+        selectedIds.map((id) =>
+          axios.delete(`${API_BASE_URL}/contact/${id}`)
+        )
       );
-      showSuccess(`${selectedIds.length} applications deleted successfully`);
+      showSuccess("Bulk delete successful");
       setSelectedIds([]);
       fetchContacts();
     } catch (_) {
-      showError("Failed to delete some applications");
-      fetchContacts();
+      showError("Bulk delete failed");
     }
   };
 
@@ -94,16 +106,30 @@ const ViewAllContacts = () => {
     }
   };
 
-  // Pagination Logic
+  const formatDate = (date) => {
+    return new Date(date).toLocaleString("en-IN", {
+      dateStyle: "medium",
+      timeStyle: "short",
+    });
+  };
+
+  // 🔍 SEARCH
+  const filteredContacts = contacts.filter((c) =>
+    (c.name || "").toLowerCase().includes(search.toLowerCase()) ||
+    (c.email || "").toLowerCase().includes(search.toLowerCase())
+  );
+
+  // 📄 PAGINATION
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = contacts.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(contacts.length / itemsPerPage);
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const currentItems = filteredContacts.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+  const totalPages = Math.ceil(filteredContacts.length / itemsPerPage);
 
   return (
-    <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-300 relative">
+    <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-300">
       {toast && (
         <Toast
           message={toast.message}
@@ -115,74 +141,107 @@ const ViewAllContacts = () => {
       {/* HEADER */}
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h2 className="text-3xl font-semibold text-gray-800">Applications Management</h2>
-          <p className="text-gray-500 text-sm mt-1">Total: {contacts.length} applications</p>
+          <h2 className="text-3xl font-semibold text-gray-800">
+            Applications Management
+          </h2>
+          <p className="text-gray-500 text-sm mt-1">
+            Total: {filteredContacts.length} applications
+          </p>
         </div>
 
-        {selectedIds.length > 0 && (
-          <button
-            onClick={handleBulkDelete}
-            className="px-6 py-2.5 rounded-lg text-white font-semibold bg-red-500 hover:bg-red-600 transition flex items-center gap-2"
-          >
-            <Trash2 size={18} />
-            Delete Selected ({selectedIds.length})
-          </button>
-        )}
+        <div className="flex gap-3">
+          <input
+            type="text"
+            placeholder="Search..."
+            className="border px-4 py-2 rounded-lg"
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setCurrentPage(1);
+            }}
+          />
+
+          {selectedIds.length > 0 && (
+            <button
+              onClick={handleBulkDelete}
+              className="bg-red-500 text-white px-4 py-2 rounded-lg flex items-center gap-2"
+            >
+              <Trash2 size={16} />
+              Delete ({selectedIds.length})
+            </button>
+          )}
+        </div>
       </div>
 
       {loading ? (
-        <div className="flex justify-center items-center h-60">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-700"></div>
+        <div className="flex justify-center h-40 items-center">
+          <div className="animate-spin h-10 w-10 border-b-2 border-purple-600 rounded-full"></div>
         </div>
       ) : (
         <>
+          {/* TABLE */}
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
-              <thead>
-                <tr className="bg-gray-100 text-left text-gray-800">
-                  <th className="p-4 w-10 border">
+            <table className="w-full border text-black">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="p-3 border">
                     <input
                       type="checkbox"
-                      className="w-5 h-5 cursor-pointer"
-                      checked={selectedIds.length === currentItems.length && currentItems.length > 0}
+                      checked={
+                        selectedIds.length === currentItems.length &&
+                        currentItems.length > 0
+                      }
                       onChange={toggleSelectAll}
                     />
                   </th>
-                  <th className="p-4 border font-semibold">Name</th>
-                  <th className="p-4 border font-semibold">Email</th>
-                  <th className="p-4 border font-semibold">Phone</th>
-                  <th className="p-4 border font-semibold">Looking For</th>
-                  <th className="p-4 border font-semibold">Status</th>
-                  <th className="p-4 border font-semibold text-center">Action</th>
+                  <th className="p-3 border">Name</th>
+                  <th className="p-3 border">Email</th>
+                  <th className="p-3 border">Phone</th>
+                  <th className="p-3 border">Looking For</th>
+                  <th className="p-3 border">Created</th>
+                  <th className="p-3 border">Updated</th>
+                  <th className="p-3 border">Status</th>
+                  <th className="p-3 border">Action</th>
                 </tr>
               </thead>
 
               <tbody>
                 {currentItems.map((item) => (
-                  <tr
-                    key={item._id}
-                    className={`hover:bg-gray-50 transition ${selectedIds.includes(item._id) ? "bg-blue-50" : ""
-                      }`}
-                  >
-                    <td className="p-4 border text-center">
+                  <tr key={item._id} className="hover:bg-gray-50">
+                    <td className="p-3 border text-center">
                       <input
                         type="checkbox"
-                        className="w-5 h-5 cursor-pointer"
                         checked={selectedIds.includes(item._id)}
                         onChange={() => toggleSelect(item._id)}
                       />
                     </td>
-                    <td className="p-4 border font-medium text-gray-800">{item.name}</td>
-                    <td className="p-4 border text-gray-600">{item.email}</td>
-                    <td className="p-4 border text-gray-600">{item.phone}</td>
-                    <td className="p-4 border text-gray-600">{item.lookingFor}</td>
 
-                    <td className="p-4 border">
+                    <td className="p-3 border">
+                      <div className="font-medium">{item.name}</div>
+                      <div className="text-xs text-gray-400">
+                        ID: {item._id?.slice(-6)}
+                      </div>
+                    </td>
+
+                    <td className="p-3 border">{item.email}</td>
+                    <td className="p-3 border">{item.phone}</td>
+                    <td className="p-3 border">{item.lookingFor}</td>
+                    <td className="p-3 border">
+                      {formatDate(item.createdAt)}
+                    </td>
+                    <td className="p-3 border">
+                      {formatDate(item.updatedAt)}
+                    </td>
+
+                    <td className="p-3 border">
                       <select
                         value={item.status}
-                        onChange={(e) => updateStatus(item._id, e.target.value)}
-                        className={`px-3 py-2 rounded-lg font-medium cursor-pointer outline-none w-full ${statusColors[item.status] || "bg-gray-100 text-gray-700"
-                          }`}
+                        onChange={(e) =>
+                          updateStatus(item._id, e.target.value)
+                        }
+                        className={`px-2 py-1 rounded ${
+                          statusColors[item.status] || "bg-gray-100"
+                        }`}
                       >
                         <option>Pending</option>
                         <option>Contacted</option>
@@ -191,10 +250,10 @@ const ViewAllContacts = () => {
                       </select>
                     </td>
 
-                    <td className="p-4 border text-center">
+                    <td className="p-3 border text-center">
                       <Trash2
-                        size={22}
-                        className="text-red-500 cursor-pointer hover:text-red-700 transition transform hover:scale-110 inline-block"
+                        size={18}
+                        className="text-red-500 cursor-pointer"
                         onClick={() => deleteContact(item._id)}
                       />
                     </td>
@@ -203,43 +262,42 @@ const ViewAllContacts = () => {
               </tbody>
             </table>
 
-            {contacts.length === 0 && (
-              <div className="text-center py-10 text-gray-500 border rounded-b-xl">No applications found.</div>
+            {filteredContacts.length === 0 && (
+              <div className="text-center py-10 text-gray-500 border">
+                No applications found
+              </div>
             )}
           </div>
 
           {/* PAGINATION */}
           {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-4 mt-8">
+            <div className="flex justify-center mt-5 gap-2">
               <button
                 disabled={currentPage === 1}
-                onClick={() => paginate(currentPage - 1)}
-                className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 hover:bg-gray-100 transition"
+                onClick={() => setCurrentPage(currentPage - 1)}
+                className="p-2 border rounded"
               >
-                <ChevronLeft size={20} />
+                <ChevronLeft size={16} />
               </button>
 
-              <div className="flex gap-2">
-                {[...Array(totalPages)].map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => paginate(i + 1)}
-                    className={`w-10 h-10 rounded-lg border transition ${currentPage === i + 1
-                      ? "bg-[#2E1A6D] text-white border-[#2E1A6D]"
-                      : "border-gray-300 hover:bg-gray-100"
-                      }`}
-                  >
-                    {i + 1}
-                  </button>
-                ))}
-              </div>
+              {[...Array(totalPages)].map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentPage(i + 1)}
+                  className={`px-3 py-1 border rounded ${
+                    currentPage === i + 1 ? "bg-purple-600 text-white" : ""
+                  }`}
+                >
+                  {i + 1}
+                </button>
+              ))}
 
               <button
                 disabled={currentPage === totalPages}
-                onClick={() => paginate(currentPage + 1)}
-                className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 hover:bg-gray-100 transition"
+                onClick={() => setCurrentPage(currentPage + 1)}
+                className="p-2 border rounded"
               >
-                <ChevronRight size={20} />
+                <ChevronRight size={16} />
               </button>
             </div>
           )}
