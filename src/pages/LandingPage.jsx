@@ -12,12 +12,46 @@ import Footer from "../components/Footer";
 import SEO from "../components/SEO";
 
 function LandingPage({ openBot }) {
+    const Schema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Wheedle Technologies Private Limited",
+  "url": "https://www.wheedletechnologies.ai/",
+  "logo": "https://www.wheedletechnologies.ai/assets/mainLogo-B41DAHRQ.svg",
+  "description": "Wheedle Technologies is an AI automation, consultation, and development company helping businesses optimize operations and scale using advanced AI solutions.",
+ 
+  "foundingDate": "2017-09-29",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Office No S-12, IInd Floor, D-242, Sector-63",
+    "addressLocality": "Noida",
+    "addressRegion": "Uttar Pradesh",
+    "postalCode": "201301",
+    "addressCountry": "IN"
+  },
+
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer support",
+    "areaServed": "IN",
+    "availableLanguage": ["English", "Hindi"]
+  },
+
+  "sameAs": [
+    "https://x.com/WheedleTechno/",
+    "https://www.linkedin.com/company/wheedle-technology/",
+    "https://www.instagram.com/wheedletechnologies/",
+    "https://www.youtube.com/@wheedletechnologies/",
+    "https://www.facebook.com/profile.php?id=61588224459976/"
+  ]
+}
   return (
     <>
       <SEO
        title="AI Automation & Development | Wheedle Technologies"
         description="Scale your business with AI automation, development & consulting services by Wheedle Technologies. Build smarter workflows & grow faster. "
-        url="https://wheedletechnologies.ai/"
+        url="https://www.wheedletechnologies.ai/"
+        schema={Schema}
       />
       <Header />
       <Hero openBot={openBot} />

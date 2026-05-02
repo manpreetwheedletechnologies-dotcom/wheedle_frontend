@@ -8,7 +8,7 @@ const servicesData = {
     title: "AI Web Engineering Agents | Wheedle Technologies ",
     description:
       "Build scalable websites using AI web engineering agents by Wheedle Technologies for faster, smarter and automated web solutions.",
-    url: "https://wheedletechnologies.ai/our-service/ai-web-engineering-agents",
+    url: "https://www.wheedletechnologies.ai/our-service/ai-web-engineering-agents",
   },
     /* ================= HERO DATA ================= */
     hero: {
@@ -108,7 +108,7 @@ const servicesData = {
     title: "AI App Development Agent | Wheedle Technologies",
     description:
       "Create intelligent mobile & web apps using AI app development agents by Wheedle Technologies for fast and scalable solutions.",
-    url: "https://wheedletechnologies.ai/our-service/ai-app-development-agent",
+    url: "https://www.wheedletechnologies.ai/our-service/ai-app-development-agent",
   },
     /* ================= HERO DATA ================= */
     hero: {
@@ -208,7 +208,7 @@ const servicesData = {
     title: "Agentic Software Platform | Wheedle Technologies",
     description:
       "Develop smarter software using agentic platforms by Wheedle Technologies to automate coding, deployment and system workflows. ",
-    url: "https://wheedletechnologies.ai/our-service/software-development-agentic-platform",
+    url: "https://www.wheedletechnologies.ai/our-service/software-development-agentic-platform",
   },
     /* ================= HERO DATA ================= */
     hero: {
@@ -307,7 +307,7 @@ const servicesData = {
     title: "AI IT Consulting & Advisory | Wheedle Technologies",
     description:
       "Get autonomous IT consulting & advisory services by Wheedle Technologies to optimize infrastructure and drive digital transformation. ",
-    url: "https://wheedletechnologies.ai/our-service/autonomous-it-consulting-and-advisory-agent",
+    url: "https://www.wheedletechnologies.ai/our-service/autonomous-it-consulting-and-advisory-agent",
   },
     /* ================= HERO DATA ================= */
     hero: {
@@ -407,7 +407,7 @@ const servicesData = {
     title: "AI Digital Marketing Agents | Wheedle Technologies",
     description:
       "Automate campaigns using AI digital marketing agents by Wheedle Technologies to boost ROI, leads and marketing performance. ",
-    url: "https://wheedletechnologies.ai/our-service/autonomous-digital-marketing-agents",
+    url: "https://www.wheedletechnologies.ai/our-service/autonomous-digital-marketing-agents",
   },
     /* ================= HERO DATA ================= */
     hero: {
@@ -507,7 +507,7 @@ const servicesData = {
     title: "AI Graphic Design Automation | Wheedle Technologies ",
     description:
       "Create stunning visuals using AI graphic design automation by Wheedle Technologies for faster and consistent branding. ",
-    url: "https://wheedletechnologies.ai/our-service/ai-graphic-design-automation-agent",
+    url: "https://www.wheedletechnologies.ai/our-service/ai-graphic-design-automation-agent",
   },
     /* ================= HERO DATA ================= */
     hero: {
@@ -607,7 +607,7 @@ const servicesData = {
     title: "AI UI UX Design Intelligence | Wheedle Technologies ",
     description:
       "Enhance user experience with AI UI/UX design intelligence by Wheedle Technologies for intuitive, data-driven design solutions. ",
-    url: "https://wheedletechnologies.ai/our-service/autonomous-ui-ux-design-intelligence",
+    url: "https://www.wheedletechnologies.ai/our-service/autonomous-ui-ux-design-intelligence",
   },
     /* ================= HERO DATA ================= */
     hero: {
@@ -707,7 +707,7 @@ const servicesData = {
     title: "AI Solutions & Automation | Wheedle Technologies",
     description:
       "Transform operations with AI solutions & intelligent automation by Wheedle Technologies to improve efficiency and scalability.",
-    url: "https://wheedletechnologies.ai/our-service/ai-solutions-and-intelligent-automation",
+    url: "https://www.wheedletechnologies.ai/our-service/ai-solutions-and-intelligent-automation",
   },
     /* ================= HERO DATA ================= */
     hero: {

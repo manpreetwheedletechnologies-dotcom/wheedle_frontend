@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 
-function SEO({ title, description, url }) {
+function SEO({ title, description, url, schema }) {
   return (
     <Helmet>
       <title>{title}</title>
@@ -20,6 +20,12 @@ function SEO({ title, description, url }) {
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
+            {/* ✅ Schema Markup */}
+      {schema && (
+        <script type="application/ld+json">
+          {JSON.stringify(schema)}
+        </script>
+      )}
     </Helmet>
   );
 }

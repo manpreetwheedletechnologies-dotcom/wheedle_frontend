@@ -15,7 +15,7 @@ function ServicesPage() {
       <SEO
       title="AI Services & Solutions | Wheedle Technologies "
         description="Explore AI services by Wheedle Technologies including automation, development & consulting to streamline operations and boost growth."
-        url="https://wheedletechnologies.ai/services"
+        url="https://www.wheedletechnologies.ai/our-services"
       />
       <Header />
         <div className="w-full min-h-screen bg-cover bg-center bg-no-repeat"

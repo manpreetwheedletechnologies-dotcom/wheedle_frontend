@@ -12,12 +12,31 @@ import Newsletter from "../components/Newsletter";
 import SEO from "../components/SEO";
 
 function BlogPage() {
+  const blogSchema = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Wheedle Technologies Blog",
+  "url": "https://www.wheedletechnologies.ai/blog",
+  "description":
+    "Explore the latest insights, trends, and updates on AI automation, development, and digital transformation by Wheedle Technologies.",
+  "inLanguage": "en-IN",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wheedle Technologies Private Limited",
+    "url": "https://www.wheedletechnologies.ai/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.wheedletechnologies.ai/path-to-logo.png"
+    }
+  }
+};
   return (
     <div className="w-full min-h-screen">
       <SEO
       title="AI Blog & Insights | Wheedle Technologies"
         description="Read AI blogs, trends & automation insights from Wheedle Technologies to stay ahead in digital transformation and innovation."
-        url="https://wheedletechnologies.ai/blog"
+        url="https://www.wheedletechnologies.ai/blog"
+        schema={blogSchema}
       />
       <Header />
        <div className="w-full min-h-screen bg-cover bg-center bg-no-repeat"

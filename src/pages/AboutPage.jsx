@@ -23,7 +23,7 @@ function AboutPage() {
       <SEO
         title="About Us | Wheedle Technologies AI Experts"
         description="Know Wheedle Technologies, a leading AI company delivering automation, consulting & custom solutions to accelerate business growth. "
-        url="https://wheedletechnologies.ai/about"
+        url="https://www.wheedletechnologies.ai/about-us"
       />
       <Header />
       <div

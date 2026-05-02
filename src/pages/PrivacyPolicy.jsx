@@ -30,7 +30,7 @@ const PrivacyPolicy = () => {
       <SEO
       title="Privacy Policy | Wheedle Technologies"
         description="Read the Privacy Policy of Wheedle Technologies to understand how we collect, use and protect your personal data and information. "
-        url="https://wheedletechnologies.ai/privacy-policy"
+        url="https://www.wheedletechnologies.ai/privacy-policy"
       />
 
       <Header />
