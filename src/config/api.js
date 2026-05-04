@@ -4,10 +4,10 @@ const isProduction = import.meta.env.MODE === "production";
 
 const config = {
   development: {
-    BASE_URL: "https://www.savorka.in/wheedle/py/api",
+    BASE_URL: "https://wheedletechnologies.ai/py/api",
   },
   production: {
-    BASE_URL: "https://www.savorka.in/wheedle/py/api",
+    BASE_URL: "https://wheedletechnologies.ai/py/api",
   },
   //   development: {
   //   BASE_URL: "http://localhost:5000/py/api",
