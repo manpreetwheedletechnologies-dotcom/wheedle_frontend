@@ -9,12 +9,7 @@ const config = {
   production: {
     BASE_URL: "https://wheedletechnologies.ai/py/api",
   },
-  //   development: {
-  //   BASE_URL: "http://localhost:5000/py/api",
-  // },
-  // production: {
-  //   BASE_URL: "http://localhost:5000/py/api",
-  // },
+
 };
 
 const API_BASE_URL = isProduction

@@ -71,7 +71,7 @@ function Hero({ openBot }) {
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
         <img
           src="/BGImage.png"
-          alt=""
+          alt="Background Image"
           className="w-full h-full object-cover opacity-20"
         />
       </div>
@@ -194,7 +194,7 @@ function Hero({ openBot }) {
             "
             onClick={() => setOpenContact(true)}
           >
-            <img src="/GetFree.png" />
+            <img src="/GetFree.png"  alt="Get Free Consultation"/>
             Unlock Your Free Consultation
           </Link>
 

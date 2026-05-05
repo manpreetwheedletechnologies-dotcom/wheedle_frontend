@@ -2,6 +2,11 @@
   RewriteEngine On
   RewriteBase /
 
+  # Redirect non-www to www
+  RewriteCond %{HTTP_HOST} ^wheedletechnologies\.ai [NC]
+  RewriteRule ^(.*)$ https://www.wheedletechnologies.ai/$1 [L,R=301]
+
+  # Existing rules
   RewriteRule ^index\.html$ - [L]
 
   RewriteCond %{REQUEST_FILENAME} !-f
