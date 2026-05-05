@@ -115,7 +115,10 @@ const TypingIndicator = () => (
 ───────────────────────────────────────────── */
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const isValidName = (v) => /^[A-Za-z ]{2,50}$/.test(v);
-const isValidMobile = (v) => /^[6-9]\d{9}$/.test(v);
+const isValidMobile = (v) => {
+  const digits = v.replace(/\D/g, '');
+  return digits.length >= 10;
+};
 const isValidEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
 const getInitialMessages = () => [
