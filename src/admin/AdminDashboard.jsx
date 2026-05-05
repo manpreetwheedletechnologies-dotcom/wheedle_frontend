@@ -131,12 +131,14 @@ const LiveChatPanel = () => {
   useEffect(() => {
     isMountedRef.current = true;
     
-    const socket = io(SOCKET_URL, {
-      transports: ["websocket", "polling"],
+    const socket = io("https://wheedletechnologies.ai", {
+      path: "/socket.io",
+      transports: ["polling", "websocket"],
+      upgrade: true,
+      withCredentials: true,
       reconnection: true,
       reconnectionAttempts: 5,
       reconnectionDelay: 1000,
-      path: "/socket.io/",
     });
     socketRef.current = socket;
 
@@ -586,7 +588,12 @@ const AdminDashboard = () => {
       .then((res) => setLiveChatCount(res.data.filter((c) => c.status === "open").length))
       .catch(() => {});
 
-    const socket = io(SOCKET_URL, { transports: ["websocket", "polling"], path: "/socket.io/" });
+    const socket = io("https://wheedletechnologies.ai", {
+      path: "/socket.io",
+      transports: ["polling", "websocket"],
+      upgrade: true,
+      withCredentials: true,
+    });
 
     socket.on("new_chat", () => setLiveChatCount((n) => n + 1));
     socket.on("chat_closed", () => setLiveChatCount((n) => Math.max(0, n - 1)));

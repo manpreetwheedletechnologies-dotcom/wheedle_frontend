@@ -158,14 +158,16 @@ const WhebotPage = ({ isMinimized, setIsMinimized }) => {
   /* ─── Socket.IO setup ─── */
   useEffect(() => {
     isMountedRef.current = true;
-    
-    const socket = io(SOCKET_URL, {
-      transports: ["websocket", "polling"],
+
+    const socket = io("https://wheedletechnologies.ai", {
+      path: "/socket.io",
+      transports: ["polling", "websocket"],
+      upgrade: true,
+      withCredentials: true,
       autoConnect: false,
       reconnection: true,
       reconnectionAttempts: 5,
       reconnectionDelay: 1000,
-      path: "/socket.io/",
     });
     socketRef.current = socket;
 
@@ -187,9 +189,9 @@ const WhebotPage = ({ isMinimized, setIsMinimized }) => {
     // Handle ALL incoming messages with chat_id check
     socket.on("new_message", (data) => {
       const { chat_id, sender, text } = data;
-      
+
       console.log("[Bot] Received new_message:", { chat_id, sender, text, currentChatId: chatIdRef.current });
-      
+
       if (chat_id !== chatIdRef.current) {
         console.log("[Bot] Ignoring message for different chat");
         return;
@@ -231,10 +233,10 @@ const WhebotPage = ({ isMinimized, setIsMinimized }) => {
   /* ─── join room when chatId changes ─── */
   useEffect(() => {
     if (!chatId) return;
-    
+
     const socket = socketRef.current;
     if (!socket) return;
-    
+
     const joinRoom = () => {
       console.log("[Bot] Joining room:", chatId);
       socket.emit("join_chat", { chat_id: chatId, role: "user" });
@@ -484,7 +486,7 @@ const WhebotPage = ({ isMinimized, setIsMinimized }) => {
     if (chatStep === "live_chat" && chatId) {
       addUserMessage(value);
       setInput("");
-      
+
       if (socketRef.current?.connected) {
         socketRef.current.emit("user_message", { chat_id: chatId, text: value });
         console.log("[Bot] Sent user_message:", value);
@@ -620,9 +622,8 @@ const WhebotPage = ({ isMinimized, setIsMinimized }) => {
                 <span className="text-[11px] opacity-80 mb-1">
                   {msg.type === "user" ? "You" : msg.sender === "agent" ? "Agent" : "WheBot"}
                 </span>
-                <div className={`max-w-[85%] text-sm px-4 py-2 rounded-xl whitespace-pre-line ${
-                  msg.type === "user" ? "bg-[#0B2CC3]" : "bg-[#040010] border border-[#0B2CC3]"
-                }`}>
+                <div className={`max-w-[85%] text-sm px-4 py-2 rounded-xl whitespace-pre-line ${msg.type === "user" ? "bg-[#0B2CC3]" : "bg-[#040010] border border-[#0B2CC3]"
+                  }`}>
                   {msg.type === "bot" && !msg.isComplete ? (
                     <>{msg.displayText}<span className="inline-block w-[2px] h-[14px] bg-white ml-[2px] animate-pulse" /></>
                   ) : msg.text}
@@ -681,9 +682,8 @@ const WhebotPage = ({ isMinimized, setIsMinimized }) => {
 
           {/* INPUT */}
           <div className="mt-auto">
-            <div className={`flex items-center gap-2 border rounded-[12px] px-4 py-2 ${
-              isInputEnabled ? "border-white bg-[#040010]" : "border-white/20 bg-[#040010]/50"
-            }`}>
+            <div className={`flex items-center gap-2 border rounded-[12px] px-4 py-2 ${isInputEnabled ? "border-white bg-[#040010]" : "border-white/20 bg-[#040010]/50"
+              }`}>
               <input type="text" disabled={!isInputEnabled} value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder={isLive ? "Type your message..." : isInputEnabled ? "Type your answer..." : "Select option above..."}
