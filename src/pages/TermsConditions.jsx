@@ -36,7 +36,7 @@ const TermsConditions = () => {
       <Header />
 
       {/* HERO */}
-      <section className="w-full flex justify-center bg-[#010509] mt-16 lg:mt-22">
+      <section className="w-full flex justify-center bg-[#010509] mt-16 lg:mt-10">
         <div className="relative w-full max-w-[1440px] min-h-[60vh] sm:min-h-[65vh] lg:min-h-[70vh]">
           <img
             src="/frame-image.png"
@@ -62,7 +62,7 @@ const TermsConditions = () => {
       {/* CONTENT */}
       <section
         className="w-full -mt-24 sm:-mt-30 lg:-mt-20 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/BG.png')" }}
+        
       >
         <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 py-20 space-y-16">
 
@@ -71,9 +71,9 @@ const TermsConditions = () => {
 
           {/* ================= TERMS ================= */}
           <div>
-            <h2 className="text-3xl font-semibold mb-8">
+            {/* <h2 className="text-3xl font-semibold mb-8">
               Terms & Conditions
-            </h2>
+            </h2> */}
 
             <div className="grid gap-6">
               <PolicyCard
