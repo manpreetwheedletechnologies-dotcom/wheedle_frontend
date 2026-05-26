@@ -11,6 +11,7 @@ import AboutPage from "./pages/AboutPage";
 import Career from "./pages/Career";
 import ContactPage from "./pages/ContactPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsConditions from "./pages/TermsConditions";
 
 import Preloader from "./components/Preloader";
 import WhebotPage from "./pages/WhebotPage";
@@ -124,7 +125,7 @@ function App() {
               />
               <Route path="/blog/:slug" element={<BlogDetails />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-
+              <Route path="/terms-conditions" element={<TermsConditions />} />
               {/* ✅ ADMIN ROUTES */}
               <Route path="/admin/login" element={<AdminLogin />} />
 
@@ -164,6 +165,9 @@ function App() {
 }
 
 export default App;
+
+
+
 
 
 
