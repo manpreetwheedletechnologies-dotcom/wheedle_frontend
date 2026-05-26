@@ -24,13 +24,13 @@ const PolicyCard = ({ title, text, list }) => (
 
 /* ---------- PAGE ---------- */
 
-const PrivacyPolicy = () => {
+const TermsConditions = () => {
   return (
     <div className="w-full min-h-screen bg-black text-white">
       <SEO
-      title="Privacy Policy | Wheedle Technologies"
-        description="Read the Privacy Policy of Wheedle Technologies to understand how we collect, use and protect your personal data and information. "
-        url="https://www.wheedletechnologies.ai/privacy-policy"
+      title="Terms & Conditions | Wheedle Technologies"
+        description="Read the Terms & Conditions of Wheedle Technologies to understand the terms that govern the use of our services. "
+        url="https://www.wheedletechnologies.ai/terms-conditions"
       />
 
       <Header />
@@ -48,7 +48,7 @@ const PrivacyPolicy = () => {
             <Badge text="Legal" margin="" />
 
             <h1 className="font-gotham font-medium text-[28px] sm:text-[32px] lg:text-[40px]">
-              Privacy Policy 
+              Terms & Conditions
             </h1>
 
             <p className="text-gray-300 max-w-[700px]">
@@ -66,54 +66,64 @@ const PrivacyPolicy = () => {
       >
         <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 py-20 space-y-16">
 
-          {/* ================= PRIVACY POLICY ================= */}
+          
+          
+
+          {/* ================= TERMS ================= */}
           <div>
             <h2 className="text-3xl font-semibold mb-8">
-              Privacy Policy
+              Terms & Conditions
             </h2>
 
             <div className="grid gap-6">
               <PolicyCard
-                title="Information We Collect"
+                title="Introduction"
+                text="By using our website and services you agree to these terms."
+              />
+
+              <PolicyCard
+                title="Use of Website"
                 list={[
-                  "Name, email, phone number",
-                  "Project information",
-                  "Usage data and cookies",
+                  "Use services lawfully",
+                  "No unauthorized access",
+                  "No copying without permission",
                 ]}
               />
 
               <PolicyCard
-                title="How We Use Information"
+                title="Intellectual Property"
+                text="All designs, code, and materials belong to Wheedle Technologies."
+              />
+
+              <PolicyCard
+                title="Client Responsibilities"
                 list={[
-                  "Provide and improve services",
-                  "Communication",
-                  "Improve user experience",
+                  "Provide accurate information",
+                  "Use solutions lawfully",
                 ]}
               />
 
               <PolicyCard
-                title="Data Security"
-                text="We implement technical and organizational safeguards to protect your data."
+                title="Limitation of Liability"
+                text="We are not liable for indirect damages or downtime."
               />
 
               <PolicyCard
-                title="Cookies & Analytics"
-                text="Cookies help understand user behavior and improve performance."
+                title="Confidentiality"
+                text="Client information is treated as confidential."
               />
 
               <PolicyCard
-                title="Third-Party Services"
-                text="We may use hosting, analytics, CRM, marketing and payment providers."
+                title="Termination"
+                text="Services may be suspended if terms are violated."
               />
 
               <PolicyCard
-                title="Data Retention"
-                text="Data is retained only when required and then securely deleted."
+                title="Changes"
+                text="Terms may change over time."
               />
             </div>
           </div>
-
-          
 
         </div>
       </section>
@@ -123,4 +133,4 @@ const PrivacyPolicy = () => {
   );
 };
 
-export default PrivacyPolicy;
+export default TermsConditions;

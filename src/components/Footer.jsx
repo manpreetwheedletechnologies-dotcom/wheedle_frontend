@@ -106,10 +106,29 @@ function Footer() {
               <div>
                 <h4 className="text-sm font-semibold mb-4">Other Links</h4>
                 <ul className="space-y-2 flex flex-col items-center md:items-start">
-                  {["Terms & Conditions"].map((text, i) => (
+                  {["Privacy Policy"].map((text, i) => (
                     <li key={i}>
                       <Link
                         to="/privacy-policy"
+                        className="group relative inline-flex h-5 overflow-hidden text-sm font-medium"
+                      >
+                        <span className="translate-y-0 transition duration-300 group-hover:-translate-y-[150%]">
+                          {text}
+                        </span>
+                        <span className="absolute translate-y-[150%] text-[#0B2CC3] transition duration-300 group-hover:translate-y-0">
+                          {text}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+
+
+                <ul className="space-y-2 flex flex-col items-center md:items-start">
+                  {["Terms & Conditions"].map((text, i) => (
+                    <li key={i}>
+                      <Link
+                        to="/terms-conditions"
                         className="group relative inline-flex h-5 overflow-hidden text-sm font-medium"
                       >
                         <span className="translate-y-0 transition duration-300 group-hover:-translate-y-[150%]">
