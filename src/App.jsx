@@ -12,6 +12,7 @@ import Career from "./pages/Career";
 import ContactPage from "./pages/ContactPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
+import DeleteAccount from "./pages/DeleteAccount";
 
 import Preloader from "./components/Preloader";
 import WhebotPage from "./pages/WhebotPage";
@@ -114,6 +115,7 @@ function App() {
           >
             <Routes location={location}>
               <Route path="/" element={<LandingPage openBot={openBot} />} />
+              <Route path="/home" element={<LandingPage openBot={openBot} />} />
               <Route path="/our-services" element={<ServicesPage />} />
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/about-us" element={<AboutPage />} />
@@ -125,6 +127,7 @@ function App() {
               />
               <Route path="/blog/:slug" element={<BlogDetails />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/delete-account" element={<DeleteAccount />} />
               <Route path="/terms-conditions" element={<TermsConditions />} />
               {/* ✅ ADMIN ROUTES */}
               <Route path="/admin/login" element={<AdminLogin />} />

@@ -104,44 +104,106 @@ function Footer() {
             {/* OTHER LINKS + SOCIAL ICONS */}
             <div className="flex flex-col gap-6">
               <div>
+  <h4 className="text-sm font-semibold mb-4">Other Links</h4>
+
+  <ul className="space-y-2 flex flex-col items-center md:items-start">
+
+    <li>
+      <a
+        href="/privacy-policy.html"
+        className="group relative inline-flex h-5 overflow-hidden text-sm font-medium"
+      >
+        <span className="translate-y-0 transition duration-300 group-hover:-translate-y-[150%]">
+          Privacy Policy
+        </span>
+
+        <span className="absolute translate-y-[150%] text-[#0B2CC3] transition duration-300 group-hover:translate-y-0">
+          Privacy Policy
+        </span>
+      </a>
+    </li>
+
+    <li>
+      <a
+        href="/delete-account.html"
+        className="group relative inline-flex h-5 overflow-hidden text-sm font-medium"
+      >
+        <span className="translate-y-0 transition duration-300 group-hover:-translate-y-[150%]">
+          User Data Deletion
+        </span>
+
+        <span className="absolute translate-y-[150%] text-[#0B2CC3] transition duration-300 group-hover:translate-y-0">
+          User Data Deletion
+        </span>
+      </a>
+    </li>
+
+    <li>
+      <a
+        href="/terms-conditions.html"
+        className="group relative inline-flex h-5 overflow-hidden text-sm font-medium"
+      >
+        <span className="translate-y-0 transition duration-300 group-hover:-translate-y-[150%]">
+          Terms & Conditions
+        </span>
+
+        <span className="absolute translate-y-[150%] text-[#0B2CC3] transition duration-300 group-hover:translate-y-0">
+          Terms & Conditions
+        </span>
+      </a>
+    </li>
+
+  </ul>
+</div>
+              {/* <div>
                 <h4 className="text-sm font-semibold mb-4">Other Links</h4>
                 <ul className="space-y-2 flex flex-col items-center md:items-start">
-                  {["Privacy Policy"].map((text, i) => (
-                    <li key={i}>
-                      <Link
-                        to="/privacy-policy"
-                        className="group relative inline-flex h-5 overflow-hidden text-sm font-medium"
-                      >
-                        <span className="translate-y-0 transition duration-300 group-hover:-translate-y-[150%]">
-                          {text}
-                        </span>
-                        <span className="absolute translate-y-[150%] text-[#0B2CC3] transition duration-300 group-hover:translate-y-0">
-                          {text}
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
+                  <li>
+                    <Link
+                      to="/privacy-policy"
+                      className="group relative inline-flex h-5 overflow-hidden text-sm font-medium"
+                    >
+                      <span className="translate-y-0 transition duration-300 group-hover:-translate-y-[150%]">
+                        Privacy Policy
+                      </span>
+                      <span className="absolute translate-y-[150%] text-[#0B2CC3] transition duration-300 group-hover:translate-y-0">
+                        Privacy Policy
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/delete-account"
+                      className="group relative inline-flex h-5 overflow-hidden text-sm font-medium"
+                    >
+                      <span className="translate-y-0 transition duration-300 group-hover:-translate-y-[150%]">
+                        User Data Deletion
+                      </span>
+                      <span className="absolute translate-y-[150%] text-[#0B2CC3] transition duration-300 group-hover:translate-y-0">
+                        User Data Deletion
+                      </span>
+                    </Link>
+                  </li>
+
+
+                  <li>
+                    <Link
+                      to="/terms-conditions"
+                      className="group relative inline-flex h-5 overflow-hidden text-sm font-medium"
+                    >
+                      <span className="translate-y-0 transition duration-300 group-hover:-translate-y-[150%]">
+                        Terms & Conditions
+                      </span>
+                      <span className="absolute translate-y-[150%] text-[#0B2CC3] transition duration-300 group-hover:translate-y-0">
+                        Terms & Conditions
+                      </span>
+                    </Link>
+                  </li>
                 </ul>
 
 
-                <ul className="space-y-2 flex flex-col items-center md:items-start">
-                  {["Terms & Conditions"].map((text, i) => (
-                    <li key={i}>
-                      <Link
-                        to="/terms-conditions"
-                        className="group relative inline-flex h-5 overflow-hidden text-sm font-medium"
-                      >
-                        <span className="translate-y-0 transition duration-300 group-hover:-translate-y-[150%]">
-                          {text}
-                        </span>
-                        <span className="absolute translate-y-[150%] text-[#0B2CC3] transition duration-300 group-hover:translate-y-0">
-                          {text}
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+               
+              </div> */}
 
               {/* SOCIAL ICONS */}
               <div className="flex gap-4 justify-center md:justify-start">
@@ -227,7 +289,7 @@ function Footer() {
         <div className="w-full max-w-[1240px] h-px bg-white/30 my-10" />
 
         <p className="text-center text-xs mb-4 sm:mb-6">
-          © 2025 <span className="text-blue-400">Wheedle Technologies</span>.
+          © 2026 <span className="text-blue-400">Wheedle Technologies</span>.
           All Rights Reserved.
         </p>
       </div >
